@@ -1,0 +1,11 @@
+{
+  "name": "wags-fitness-repository",
+  "version": "1.0.0",
+  "description": "The frontend of wags media repository",
+  "main": "index.js",
+  "scripts": {
+    "dev": "http-server ./ -p 3019"
+  },
+  "author": "Keith Wagner",
+  "license": "MIT"
+}
