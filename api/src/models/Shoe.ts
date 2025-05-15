@@ -1,12 +1,12 @@
 type Shoe = {
     shoeId: number;
     name: string;
-    datePurchased: Date;
+    datePurchased: Date | string | null;
     isRetired: boolean;
     milesRun?: number;
     runCount?: number;
-    dateFirstRun?: Date;
-    dateLastRun?: Date;
+    dateFirstRun?: Date | string | null;
+    dateLastRun?: Date | string | null;
     lifespan?: number;
 }
 

@@ -26,7 +26,7 @@ class Sidebar extends HTMLElement {
 							<ul class="sub-list">
 								<li class="${this.activeLink === 'runs-overiew' ? 'active' : ''}"><a href="/runs/index.html">Overview</a></li>
 								<li class="${this.activeLink === 'runs-runs' ? 'active' : ''}"><a href="/runs/runs.html">Runs</a></li>
-								<li class="${this.activeLink === 'runs-sneakers' ? 'active' : ''}"><a href="/runs/sneakers.html">Sneakers</a></li>
+								<li class="${this.activeLink === 'runs-shoes' ? 'active' : ''}"><a href="/runs/shoes.html">Shoes</a></li>
 							</ul>
 						</details>
 					</li>
@@ -39,4 +39,4 @@ class Sidebar extends HTMLElement {
 	}
 }
 
-customElements.define('wags-media-sidebar', Sidebar);
+customElements.define('wags-fitness-sidebar', Sidebar);

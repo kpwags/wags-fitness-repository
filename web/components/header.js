@@ -13,4 +13,4 @@ class Header extends HTMLElement {
 	}
 }
 
-customElements.define('wags-media-header', Header);
+customElements.define('wags-fitness-header', Header);

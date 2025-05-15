@@ -12,5 +12,6 @@ SELECT
     ShoeId
 FROM Run
 WHERE
-	ShoeId = ?;
+	ShoeId = ?
+ORDER BY DateRan;
 `;
