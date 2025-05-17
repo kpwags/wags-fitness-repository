@@ -33,6 +33,7 @@ a {
 	grid-template-columns: 1fr 7fr;
 	gap: 0;
 	padding: 0;
+	width: 100%;
 }
 
 .page-content:has(aside[data-collapsed]) {
@@ -160,6 +161,36 @@ footer {
 	color: var(--grey-1);
 	padding: 8px 0;
 }
+
+@media (max-width: 767px) {
+	.page-content {
+		grid-template-areas:
+			"header header"
+			"content content"
+			"footer footer";
+	}
+
+	.page-content:not(:has(aside[data-collapsed])) {
+		grid-template-areas:
+			"header header"
+			"menu menu"
+			"footer footer";
+	}
+
+	.page-content:not(:has(aside[data-collapsed])) main {
+		display: none;
+	}
+
+	.page-content:not(:has(aside[data-collapsed])) aside {
+		display: block;
+		min-height: calc(100vh - 104px);
+	}
+
+	.page-content:has(aside[data-collapsed]) aside {
+		display: none;
+	}
+}
+
 
 /* TEXT */
 .metadata {
