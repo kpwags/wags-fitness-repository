@@ -15,8 +15,11 @@
 
 		<script src="/components/header.js"></script>
 		<script src="/components/sidebar.js"></script>
+		<script src="/components/footer.js"></script>
 		<script src="/components/loading-spinner.js"></script>
 		<script src="/components/progress-bar.js"></script>
+		<script src="/components/confirm-dialog.js"></script>
+		<script src="/components/submit-form-button.js"></script>
 
 		<script src="/scripts/main.js"></script>
 		<script src="/scripts/api.js"></script>
@@ -165,7 +168,14 @@
 
 					<div class="actions">
 	                    <button type="button" class="btn-ghost" id="form-dialog-cancel">Cancel</button>
-	                    <button type="submit" class="btn-primary">Save</button>
+						<submit-form-button>
+							<button type="submit" class="btn-primary">
+								<span class="btn-processing-content">
+									<span class="loader" style="display:none"></span>
+									<span class="button-text">Save</span>
+								</span>
+							</button>
+						</submit-form-button>
 	                </div>
 	            </fieldset>
 			</form>

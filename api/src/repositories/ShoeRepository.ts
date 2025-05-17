@@ -12,6 +12,7 @@ import {
 	updateShoe,
 	getLastInsertedId,
 	deleteShoe,
+	addShoe,
 } from '../queries/shoes';
 
 import convertDateToJsonDate from '../lib/convertDateToJsonDate';
@@ -48,8 +49,8 @@ class ShoeRepository {
 
 		const shoesWithRunData: Shoe[] = [];
 
-		await Promise.all(shoes.map(async (shoe) => {
-			const [error, data] = await RunRepository.GetRunsForShoe(shoe.shoeId);
+		for await (const shoe of shoes) {
+            const [error, data] = await RunRepository.GetRunsForShoe(shoe.shoeId);
 
 			if (error || data.length === 0) {
 				shoesWithRunData.push({
@@ -70,9 +71,7 @@ class ShoeRepository {
 					lifespan: calculateLifespan(data),
 				});
 			}
-		}));
-
-		console.log(shoesWithRunData)
+        }
 
 		return [null, shoesWithRunData];
 	}
@@ -113,19 +112,22 @@ class ShoeRepository {
 	}
 
 	static async AddShoe(shoe: Shoe): Promise<[error: string | null, id: number | null]> {
-		const error = await db.Execute(updateShoe, [shoe.name, shoe.datePurchased, shoe.isRetired, shoe.shoeId]);
+		const error = await db.Execute(addShoe, [shoe.name, shoe.datePurchased, shoe.isRetired]);
 
 		if (error) {
+			console.log({ insertError: error })
 			return [error, null];
 		}
 
 		const [lastInsertedIdError, lastInsertedId] = await this.GetLastInsertedRowId();
 
 		if (lastInsertedIdError) {
+			console.log({ lastInsertError: error })
 			return [lastInsertedIdError, null];
 		}
 
 		if (!lastInsertedId) {
+			console.log({ lastInsert: 'Invalid ID' })
 			return ['Unable to retrieve ID', null];
 		}
 

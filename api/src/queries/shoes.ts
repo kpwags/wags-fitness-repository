@@ -4,7 +4,8 @@ SELECT
 	Name,
 	DatePurchased,
 	IsRetired
-FROM Shoe;
+FROM Shoe
+ORDER BY DatePurchased;
 `;
 
 export const getActiveShoes = `

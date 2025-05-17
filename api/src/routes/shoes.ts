@@ -1,5 +1,4 @@
 import express from 'express';
-import RunRepository from '../repositories/RunRepository';
 import ShoeRepository from '../repositories/ShoeRepository';
 import Shoe from '../models/Shoe';
 
@@ -60,7 +59,7 @@ router.post('/', (req, res) => {
     };
 
     ShoeRepository.AddShoe(shoe)
-        .then(([error, shoeId]) => {
+        .then(([error, shoeId]) => {   
             if (error) {
                 return res.status(400).json({ error });
             }

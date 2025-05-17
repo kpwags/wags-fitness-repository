@@ -26,6 +26,7 @@ async function client(endpoint, {
     return window.fetch(`${apiUrl}/${endpoint}`, config).then(async (response) => {
         if (response.status === 400) {
             const error = await response.json();
+
             return Promise.reject(error.error);
         }
 
@@ -55,6 +56,10 @@ const handleApiError = (error) => {
 
     if (typeof error.message === 'string') {
         return error.message;
+    }
+
+    if (typeof error.error === 'string') {
+        return error.error;
     }
 
     return 'An error has occurred';

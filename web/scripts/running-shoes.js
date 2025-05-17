@@ -14,25 +14,49 @@ window.addEventListener('load', function () {
 	document.querySelector('#form-dialog-cancel').addEventListener('click', function () {
 		closeShoeForm();
 	});
+
+	document.querySelector('form[name="shoe-form"]')?.addEventListener('submit', async function (e) {
+		e.preventDefault();
+		await saveShoe();
+	});
+
+	document.querySelector('dialog.confirm-dialog button.confirm-dialog-no').addEventListener('click', function () {
+		cancelOutOfConfirmDialog('#delete-shoe-id');
+	});
+
+	document.querySelector('dialog.confirm-dialog button.confirm-dialog-yes').addEventListener('click', function () {
+		deleteShoe();
+	});
 });
+
+function setProcessing(isProcessing) {
+	const btn = document.querySelector('submit-form-button');
+
+	if (isProcessing) {
+		btn.setAttribute('processing', 'true');
+		btn.setAttribute('buttontext', 'Saving');
+		document.querySelectorAll('form[name="shoe-form"] button').forEach((b) => b.setAttribute('disabled', 'true'));
+	
+	} else {
+		btn.setAttribute('processing', 'false');
+		btn.setAttribute('buttontext', 'Save');
+		document.querySelectorAll('form[name="shoe-form"] button').forEach((b) => b.removeAttribute('disabled'));
+	}
+}
 
 async function loadRunningShoes() {
 	const [data, error] = await Api.Get('shoe');
 
 	if (error) {
 		showPageError(error);
-		document.querySelector('#active-running-shoes-table-body tr.loading')?.classList.add('hidden');
-		document.querySelector('#active-running-shoes-table-body tr.no-content')?.classList.remove('hidden');
-		document.querySelector('#retired-running-shoes-table-body tr.loading')?.classList.add('hidden');
-		document.querySelector('#retired-running-shoes-table-body tr.no-content')?.classList.remove('hidden');
+		showNoDataForTable('#active-running-shoes-table-body');
+		showNoDataForTable('#retired-running-shoes-table-body');
 		return;
 	}
 
 	if (data.length === 0) {
-		document.querySelector('#active-running-shoes-table-body tr.loading')?.classList.add('hidden');
-		document.querySelector('#active-running-shoes-table-body tr.no-content')?.classList.remove('hidden');
-		document.querySelector('#retired-running-shoes-table-body tr.loading')?.classList.add('hidden');
-		document.querySelector('#retired-running-shoes-table-body tr.no-content')?.classList.remove('hidden');
+		showNoDataForTable('#active-running-shoes-table-body');
+		showNoDataForTable('#retired-running-shoes-table-body');
 		return;
 	}
 
@@ -115,7 +139,7 @@ function loadTable() {
 			deleteButton.textContent = 'Delete';
 			deleteButton.classList.add('btn-link');
 			deleteButton.addEventListener('click', function () {
-				console.log(shoe.shoeId);
+				openDeleteConfirmation(shoe);
 			});
 
 			actionsCell.appendChild(editButton);
@@ -130,32 +154,29 @@ function loadTable() {
 			}
 		});
 
-		document.querySelector('#retired-running-shoes-table-body tr.loading')?.classList.add('hidden');
-		document.querySelector('#active-running-shoes-table-body tr.loading')?.classList.add('hidden');
-
 		if (retiredShoes.length > 0) {
+			document.querySelector('#retired-running-shoes-table-body tr.loading')?.classList.add('hidden');
 			document.getElementById('retired-running-shoes-table-body').appendChild(retiredShoesfragment);
 		} else {
-			document.querySelector('#retired-running-shoes-table-body tr.no-content')?.classList.remove('hidden');
+			showNoDataForTable('#retired-running-shoes-table-body');
 		}
 
 		if (activeShoes.length > 0) {
+			document.querySelector('#active-running-shoes-table-body tr.loading')?.classList.add('hidden');
 			document.getElementById('active-running-shoes-table-body').appendChild(activeShoesfragment);
 		} else {
-			document.querySelector('#active-running-shoes-table-body tr.no-content')?.classList.remove('hidden');
+			showNoDataForTable('#active-running-shoes-table-body');
 		}
 	} else {
-		document.querySelector('#active-running-shoes-table-body tr.loading')?.classList.add('hidden');
-		document.querySelector('#active-running-shoes-table-body tr.no-content')?.classList.remove('hidden');
-
-		document.querySelector('#retired-running-shoes-table-body tr.loading')?.classList.add('hidden');
-		document.querySelector('#retired-running-shoes-table-body tr.no-content')?.classList.remove('hidden');
+		showNoDataForTable('#active-running-shoes-table-body');
+		showNoDataForTable('#retired-running-shoes-table-body');
 	}
 }
 
 function closeShoeForm() {
 	document.querySelector('form[name="shoe-form"]').reset();
 	document.querySelector('dialog#shoe-form-dialog').close();
+	setProcessing(false);
 }
 
 function editShoe(shoeId) {
@@ -170,4 +191,73 @@ function editShoe(shoeId) {
 
 		document.querySelector('dialog#shoe-form-dialog').showModal();
 	}
+}
+
+function buildShoeData() {
+	return {
+		shoeId: parseInt(document.querySelector('input#shoeId').value),
+		name: document.querySelector('input#name').value,
+		datePurchased: document.querySelector('input#purchase-date').value,
+		isRetired: document.querySelector('input#is-retired').checked,
+	}
+}
+
+async function addShoe(values) {
+	const [, error] = await Api.Post('shoe', {
+		data: values,
+	});
+
+	return error;
+}
+
+async function updateShoe(values) {
+	const [, error] = await Api.Put(`shoe/${values.shoeId}`, {
+		data: values,
+	});
+
+	return error;
+}
+
+async function saveShoe() {
+	hideModalError('modal-error');
+	setProcessing(true);
+
+	const values = buildShoeData();
+
+	const error = values.shoeId > 0
+		? await updateShoe(values)
+		: await addShoe(values);
+
+	if (error) {
+		showModalError(error, 'modal-error');
+		setProcessing(false);
+		return;
+	}
+
+	await loadRunningShoes();
+
+	closeShoeForm();
+}
+
+function openDeleteConfirmation(shoe) {
+	document.getElementById('delete-shoe-id').value = shoe.shoeId;
+
+	document.querySelector('dialog.confirm-dialog .text').textContent = `Are you sure you want to delete the shoe "${shoe.name}"?`;
+	document.querySelector('dialog.confirm-dialog').showModal();
+}
+
+async function deleteShoe() {
+	const shoeId = document.getElementById('delete-shoe-id').value;
+
+	const [, error] = await Api.Delete(`shoe/${shoeId}`);
+
+	if (error) {
+		showPageError(error);
+		document.querySelector('dialog.confirm-dialog').close();
+		return;
+	}
+
+	await loadRunningShoes();
+
+	document.querySelector('dialog.confirm-dialog').close();
 }

@@ -9,7 +9,6 @@ window.addEventListener('load', () => {
 
 function toggleSidebar() {
 	const sidebar = document.querySelector('aside#sidebar');
-	const mainContent = document.querySelector('main');
 
 	if (sidebar.hasAttribute('data-collapsed')) {
 		sidebar.removeAttribute('data-collapsed');
@@ -76,4 +75,17 @@ function disableFieldset() {
 
 function enableFieldset() {
 	document.querySelector('fieldset')?.removeAttribute('disabled');
+}
+
+function showNoDataForTable(prefix = '') {
+	document.querySelector(`${prefix} tr.loading`)?.classList.add('hidden');
+	document.querySelector(`${prefix} tr.no-content`)?.classList.remove('hidden');
+}
+
+function cancelOutOfConfirmDialog(keyFieldSelector = undefined) {
+	if (keyFieldSelector) {
+		document.querySelector(keyFieldSelector).value = 0;
+	}
+
+	document.querySelector('dialog.confirm-dialog').close();
 }
