@@ -1,0 +1,26 @@
+{
+	"workbench.colorCustomizations": {
+		"titleBar.activeBackground": "#6c2f91",
+		"titleBar.inactiveBackground": "#6c2f91",
+		"titleBar.activeForeground": "#ffffff",
+		"activityBar.activeBackground": "#39164e",
+		"activityBarBadge.background": "#e73546",
+		"activityBarBadge.foreground": "#ffffff",
+		"activityBar.inactiveForeground": "#ffffff",
+		"activityBar.background": "#6c2f91",
+		"activityBar.foreground": "#ffffff",
+		"statusBar.background": "#6c2f91",
+		"statusBar.border": "#6c2f91",
+		"statusBarItem.remoteBackground": "#6c2f91",
+		"statusBarItem.remoteForeground": "#ffffff",
+		"statusBar.foreground": "#ffffff"
+	},
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/bower_components": true,
+		"**/*.code-search": true,
+		"**/.next": true
+	}
+}

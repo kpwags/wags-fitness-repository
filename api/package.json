@@ -1,0 +1,29 @@
+{
+  "name": "wags-fitness-repository-api",
+  "version": "1.0.0",
+  "description": "The API for my fitness repository",
+  "license": "MIT",
+  "author": "Keith Wagner",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.ts"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.5",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.1",
+    "@types/sqlite3": "^3.1.11",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2"
+  }
+}

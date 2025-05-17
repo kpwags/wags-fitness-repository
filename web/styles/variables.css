@@ -1,0 +1,30 @@
+:root {
+    --font: Inconsolata, monospace;
+    --background: oklch(100% 0 0);
+    --text: oklch(26.97% 0 0);
+    --border-color: oklch(75.7% 0 0);
+
+    --sidebar-width: 250px;
+
+    --green-1: oklch(0.38 0.0962 150.88);
+    --green-2: oklch(0.45 0.1085 150.88);
+    --green-3: oklch(0.5 0.1209 150.88);
+    --green-4: oklch(0.57 0.1381 150.88);
+    --green-5: oklch(0.67 0.1307 150.88);
+    --green-6: oklch(0.86 0.1233 150.88);
+
+    --grey-1: oklch(100% 0 0);
+    --grey-2: oklch(92.16% 0 0);
+    --grey-3: oklch(94.12% 0.005 302);
+    --grey-4: oklch(75.7% 0 0);
+    --grey-5: oklch(50.13% 0 0);
+
+    --black-1: oklch(0% 0 256.24);
+    --black-2: oklch(16.91% 0 256.24);
+    --black-3: oklch(21.96% 0 256.24);
+    --black-4: oklch(24% 0 173.65);
+
+    --danger-1: oklch(56.68% 0.22 22.76);
+    --danger-2: oklch(61.87% 0.22 22.76);
+    --danger-3: oklch(87.05% 0.0715 3.71);
+}
