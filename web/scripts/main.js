@@ -5,6 +5,10 @@ window.addEventListener('load', () => {
 	const mainMenu = document.querySelector('header button.menu-button');
 
 	mainMenu?.addEventListener('click', toggleSidebar);
+
+	if (window.innerWidth < 768) {
+		sidebar.setAttribute('data-collapsed', true);
+	}
 });
 
 function toggleSidebar() {

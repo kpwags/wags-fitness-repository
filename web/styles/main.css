@@ -17,11 +17,45 @@ body {
 
 h1 {
 	color: var(--green-1);
-	margin-bottom: 24px;
+	margin: 0 0 24px;
 }
 
 a {
 	color: var(--green-3);
+}
+
+.page-content {
+	display: grid;
+	grid-template-areas:
+		"header header"
+		"menu content"
+		"footer footer";
+	grid-template-columns: 1fr 7fr;
+	gap: 0;
+	padding: 0;
+}
+
+.page-content:has(aside[data-collapsed]) {
+	grid-template-areas:
+		"header header"
+		"content content"
+		"footer footer";
+}
+
+.page-content:has(aside[data-collapsed]) aside {
+	display: none;
+}
+
+wags-fitness-header {
+	grid-area: header;
+}
+
+wags-fitness-sidebar {
+	grid-area: menu;
+}
+
+wags-fitness-footer {
+	grid-area: footer;
 }
 
 header {
@@ -32,10 +66,8 @@ header {
 	column-gap: 16px;
 	border-bottom: 4px solid var(--grey-3);
 	align-items: center;
-	position: fixed;
 	width: 100%;
 	height: 60px;
-	z-index: 20;
 }
 
 header button {
@@ -69,27 +101,11 @@ header .build {
 	color: var(--grey-1);
 }
 
-.page-content {
-	display: flex;
-}
-
 aside {
 	height: 100%;
-	top: 60px;
-	left: 0;
-	width: var(--sidebar-width);
-	position: fixed;
 	background: var(--black-4);
-	border-right: 4px solid var(--grey-3);
+	border-right: 4px solid var(--green-1);
 	transition: transform 250ms ease-in-out;
-}
-
-body:not(:has(aside[data-collapsed])) main {
-	width: calc(100% - 250px);
-}
-
-aside[data-collapsed] {
-	left: calc(var(--sidebar-width) * -1);
 }
 
 aside ul {
@@ -129,15 +145,20 @@ aside ul.sub-list {
 	padding: 0 0 0 16px;
 }
 
-
 main {
-	margin-top: 60px;
+	grid-area: content;
 	padding: 24px;
 	width: 100%;
+	min-height: calc(100vh - 104px);
 }
 
-body:has(aside:not([data-collapsed])) main {
-	margin-left: var(--sidebar-width);
+footer {
+	grid-area: footer;
+	text-align: center;
+	background-color: var(--green-1);
+	border-top: 4px solid var(--grey-3);
+	color: var(--grey-1);
+	padding: 8px 0;
 }
 
 /* TEXT */
