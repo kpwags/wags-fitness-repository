@@ -6,6 +6,7 @@ window.addEventListener('load', function () {
 	loadRunningShoes();
 
 	document.querySelector('#add-new-shoe')?.addEventListener('click', function () {
+		document.querySelector('#shoe-form-dialog h3').textContent = 'Add Run';
 		document.querySelector('dialog#shoe-form-dialog input#shoeId').value = '0';
 		document.querySelector('dialog#shoe-form-dialog input#purchase-date').value = dayjs().format('YYYY-MM-DD');
 		document.querySelector('dialog#shoe-form-dialog').showModal();
@@ -97,7 +98,7 @@ function loadTable() {
 
 			const milesCell = document.createElement('td');
 			milesCell.classList.add('center-align');
-			milesCell.textContent = shoe.milesRun;
+			milesCell.textContent = shoe.distance.toFixed(2);
 
 			tr.appendChild(milesCell);
 

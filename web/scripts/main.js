@@ -93,3 +93,41 @@ function cancelOutOfConfirmDialog(keyFieldSelector = undefined) {
 
 	document.querySelector('dialog.confirm-dialog').close();
 }
+
+function calculateAverage(values) {
+	return values.reduce((a, b) => a + b) / values.length;
+}
+
+function sumValues(values) {
+	return values.reduce((a, b) => a + b, 0)
+}
+
+function titledSpan(title, value) {
+	const span = document.createElement('span');
+
+	const titleSpan = document.createElement('span');
+	titleSpan.classList.add('bolded');
+	titleSpan.textContent = `${title}: `;
+
+	const valueSpan = document.createElement('span');
+	valueSpan.textContent = value;
+
+	span.appendChild(titleSpan);
+	span.appendChild(valueSpan);
+
+	return span;
+}
+
+function buildSelectList(data, valueKey, textKey) {
+	const fragment = document.createDocumentFragment();
+
+	data.forEach((d) => {
+		const opt = document.createElement('option');
+		opt.setAttribute('value', d[valueKey]);
+		opt.textContent = d[textKey];
+
+		fragment.appendChild(opt);
+	});
+
+	return fragment;
+}

@@ -24,6 +24,7 @@
 		<script src="/scripts/main.js"></script>
 		<script src="/scripts/api.js"></script>
 		<script src="/scripts/runs.js"></script>
+		<script src="/scripts/run-utilities.js"></script>
 
 		<script src="/scripts/lib/dayjs.min.js"></script>
 		<script src="/scripts/lib/dayjs.timezone.js"></script>
@@ -37,30 +38,40 @@
 		<title>Runs - Wags Fitness Repository</title>
 
 		<style type="text/css">
-			th.name-col {
-				min-width: 250px;
+			th.date-col {
+				min-width: 110px;
 			}
 
-			th.date-col,
-			th.years-col {
+			th.temperature-col {
+				min-width: 100px;
+			}
+
+			th.time-col {
+				min-width: 100px;
+			}
+
+			th.distance-col {
+				min-width: 120px;
+			}
+
+			th.pace-col {
 				min-width: 130px;
 			}
 
-			th.runs-col,
-			th.miles-col {
-				min-width: 80px;
+			th.elevation-col {
+				min-width: 100px;
 			}
 
-			th.lifespan-col {
-				min-width: 150px;
+			th.hr-col {
+				min-width: 100px;
+			}
+
+			th.shoes-col {
+				min-width: 200px;
 			}
 
 			th.actions-col {
 				min-width: 175px;
-			}
-
-			.active-running-shoes {
-				margin-bottom: 64px;
 			}
 		</style>
 	</head>
@@ -76,14 +87,14 @@
 
 					<div class="runs">
 						<div class="table-actions">
-							<button type="button" class="btn-primary" id="add-new-shoe">Add New Running Shoe</button>
+							<button type="button" class="btn-primary" id="add-new-run">Add Run</button>
 						</div>
 						<div class="table-wrapper">
 							<table>
 								<thead>
 									<tr>
 										<th scope="column" class="date-col">Date</th>
-										<th scope="column" class="temperature-col">Temperature</th>
+										<th scope="column" class="temperature-col">Temp</th>
 										<th scope="column" class="time-col">Time</th>
 										<th scope="column" class="distance-col">Distance</th>
 										<th scope="column" class="pace-col">Pace</th>
@@ -98,7 +109,7 @@
 										<td colspan="9"><loading-spinner></loading-spinner></td>
 									</tr>
 									<tr class="no-content hidden">
-										<td colspan="9">No Active Running Shoes</td>
+										<td colspan="9">No Runs</td>
 									</tr>
 								</tbody>
 							</table>
@@ -109,34 +120,63 @@
 			<wags-fitness-footer></wags-fitness-footer>
 		</div>
 
-		<dialog class="form-dialog" id="shoe-form-dialog">
-			<h3>Add Shoe</h3>
+		<dialog class="form-dialog" id="run-form-dialog">
+			<h3>Add Run</h3>
 
 			<div id="modal-error" class="alert error hidden"></div>
 
-			<form name="shoe-form">
+			<form name="run-form">
 				<fieldset>
-					<legend hidden>Add Shoe</legend>
-					<input type="hidden" id="shoeId" name="shoeId" value="0" />
+					<legend hidden>Add Run</legend>
+					<input type="hidden" id="runId" name="runId" value="0" />
 
 					<div class="form-field">
-						<label for="name">
-							<span class="required">*</span>Name
-							<input type="text" name="name" id="name" required />
+						<label for="date-run">
+							<span class="required">*</span>Date
+							<input type="date" name="date-run" id="date-run" />
+						</label>
+					</div>
+
+					<div class="form-field dual">
+						<label for="distance">
+							<span class="required">*</span>Distance
+							<input type="text" name="distance" id="distance" required />
+						</label>
+						<label for="hours">
+							<span class="required">*</span>Hours
+							<input type="text" name="hours" id="hours" required />
+						</label>
+						<label for="minutes">
+							<span class="required">*</span>Minutes
+							<input type="text" name="minutes" id="minutes" required />
+						</label>
+						<label for="seconds">
+							<span class="required">*</span>Seconds
+							<input type="text" name="seconds" id="seconds" required />
+						</label>
+					</div>
+
+					<div class="form-field dual">
+						<label for="temperature">
+							<span class="required">*</span>Temperature
+							<input type="text" name="temperature" id="temperature" required />
+						</label>
+						<label for="heart-rate">
+							<span class="required">*</span>Heart Rate
+							<input type="text" name="heart-rate" id="heart-rate" required />
+						</label>
+						<label for="elevation">
+							<span class="required">*</span>Elevation
+							<input type="text" name="elevation" id="elevation" required />
 						</label>
 					</div>
 
 					<div class="form-field">
-						<label for="purchase-date">
-							<span class="required">*</span>Purchase Date
-							<input type="date" name="purchase-date" id="purchase-date" />
-						</label>
-					</div>
-
-					<div class="form-field">
-						<label for="is-retired">
-							<input type="checkbox" name="is-retired" id="is-retired" value="true" switch />
-							Retired?
+						<label for="shoe-id">
+							Shoe
+							<select name="shoe-id" id="shoe-id">
+								<option value="0">Not Specified</option>
+							</select>
 						</label>
 					</div>
 
@@ -155,7 +195,7 @@
 			</form>
 		</dialog>
 
-		<input type="hidden" id="delete-shoe-id" value="0" />
+		<input type="hidden" id="delete-run-id" value="0" />
 		<confirm-dialog></confirm-dialog>
 	</body>
 </html>

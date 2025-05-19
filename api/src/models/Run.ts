@@ -5,12 +5,13 @@ type Run = {
     hours: number;
     minutes: number;
     seconds: number;
-    runTime: string;
-    milesRun: number;
-    pace: string;
+    runTime?: string;
+    distance: number;
+    pace?: string;
     elevation: number;
     heartRate: number;
-    shoeId: number;
+    shoeId: number | null;
+    shoeName?: string | null;
 }
 
 export default Run;
