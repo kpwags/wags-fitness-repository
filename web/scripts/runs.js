@@ -89,77 +89,100 @@ function loadTable() {
 			tableFragment.appendChild(summaryRow);
 		}
 
-		const tr = document.createElement('tr');
-		tr.classList.add('data-row');
+		// const tr = document.createElement('tr');
+		// tr.classList.add('data-row');
 
-		const dateCell = document.createElement('td');
-		dateCell.textContent = dateRun.format('M/D/YYYY');
+		// const dateCell = document.createElement('td');
+		// dateCell.textContent = dateRun.format('M/D/YYYY');
 
-		tr.appendChild(dateCell);
+		// tr.appendChild(dateCell);
 
-		const tempCell = document.createElement('td');
-		tempCell.classList.add('center-align');
-		tempCell.textContent = run.temperature ? `${run.temperature}ºF` : '';
+		// const tempCell = document.createElement('td');
+		// tempCell.classList.add('center-align');
+		// tempCell.textContent = run.temperature ? `${run.temperature}ºF` : '';
 
-		tr.appendChild(tempCell);
+		// tr.appendChild(tempCell);
 
-		const timeCell = document.createElement('td');
-		timeCell.classList.add('center-align');
-		timeCell.textContent = run.runTime;
+		// const timeCell = document.createElement('td');
+		// timeCell.classList.add('center-align');
+		// timeCell.textContent = run.runTime;
 
-		tr.appendChild(timeCell);
+		// tr.appendChild(timeCell);
 
-		const distanceCell = document.createElement('td');
-		distanceCell.classList.add('center-align');
-		distanceCell.textContent = run.distance;
+		// const distanceCell = document.createElement('td');
+		// distanceCell.classList.add('center-align');
+		// distanceCell.textContent = run.distance;
 
-		tr.appendChild(distanceCell);
+		// tr.appendChild(distanceCell);
 
-		const paceCell = document.createElement('td');
-		paceCell.classList.add('center-align');
-		paceCell.textContent = `${run.pace}/mi.`;
+		// const paceCell = document.createElement('td');
+		// paceCell.classList.add('center-align');
+		// paceCell.textContent = `${run.pace}/mi.`;
 
-		tr.appendChild(paceCell);
+		// tr.appendChild(paceCell);
 
-		const elevationCell = document.createElement('td');
-		elevationCell.classList.add('center-align');
-		elevationCell.textContent = run.elevation ? run.elevation : '';
+		// const elevationCell = document.createElement('td');
+		// elevationCell.classList.add('center-align');
+		// elevationCell.textContent = run.elevation ? run.elevation : '';
 
-		tr.appendChild(elevationCell);
+		// tr.appendChild(elevationCell);
 
-		const heartRateCell = document.createElement('td');
-		heartRateCell.classList.add('center-align');
-		heartRateCell.textContent = run.heartRate ? run.heartRate : '';
+		// const heartRateCell = document.createElement('td');
+		// heartRateCell.classList.add('center-align');
+		// heartRateCell.textContent = run.heartRate ? run.heartRate : '';
 
-		tr.appendChild(heartRateCell);
+		// tr.appendChild(heartRateCell);
 
-		const shoeCell = document.createElement('td');
-		shoeCell.textContent = run.shoeName ? run.shoeName : '';
+		// const shoeCell = document.createElement('td');
+		// shoeCell.textContent = run.shoeName ? run.shoeName : '';
 
-		tr.appendChild(shoeCell);
+		// tr.appendChild(shoeCell);
 
-		const actionsCell = document.createElement('td');
+		// const actionsCell = document.createElement('td');
 
-		const editButton = document.createElement('button');
-		editButton.textContent = 'Edit';
-		editButton.classList.add('btn-link');
-		editButton.addEventListener('click', function () {
+		// const editButton = document.createElement('button');
+		// editButton.textContent = 'Edit';
+		// editButton.classList.add('btn-link');
+		// editButton.addEventListener('click', function () {
+		// 	editRun(run);
+		// })
+
+		// const deleteButton = document.createElement('button');
+		// deleteButton.textContent = 'Delete';
+		// deleteButton.classList.add('btn-link');
+		// deleteButton.addEventListener('click', function () {
+		// 	openDeleteConfirmation(run);
+		// });
+
+		// actionsCell.appendChild(editButton);
+		// actionsCell.appendChild(deleteButton);
+
+		// tr.appendChild(actionsCell);
+
+		// tableFragment.appendChild(tr);
+
+		const template = document.querySelector('template#run-row');
+
+		const clone = template.content.cloneNode(true);
+
+		clone.querySelector('.date-col').textContent = dateRun.format('M/D/YYYY');
+		clone.querySelector('.temperature-col').textContent = run.temperature ? `${run.temperature}ºF` : '';
+		clone.querySelector('.time-col').textContent = run.runTime;
+		clone.querySelector('.distance-col').textContent = run.distance;
+		clone.querySelector('.pace-col').textContent = `${run.pace}/mi.`;
+		clone.querySelector('.elevation-col').textContent = run.elevation ? run.elevation : '';
+		clone.querySelector('.hr-col').textContent = run.heartRate ? run.heartRate : '';
+		clone.querySelector('.shoes-col').textContent = run.shoeName ? run.shoeName : '';
+
+		clone.querySelector('.btn-edit').addEventListener('click', function () {
 			editRun(run);
-		})
+		});
 
-		const deleteButton = document.createElement('button');
-		deleteButton.textContent = 'Delete';
-		deleteButton.classList.add('btn-link');
-		deleteButton.addEventListener('click', function () {
+		clone.querySelector('.btn-delete').addEventListener('click', function () {
 			openDeleteConfirmation(run);
 		});
 
-		actionsCell.appendChild(editButton);
-		actionsCell.appendChild(deleteButton);
-
-		tr.appendChild(actionsCell);
-
-		tableFragment.appendChild(tr);
+		tableFragment.appendChild(clone);
 
 		previousDateRun = dateRun;
 	});

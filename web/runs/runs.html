@@ -197,5 +197,33 @@
 
 		<input type="hidden" id="delete-run-id" value="0" />
 		<confirm-dialog></confirm-dialog>
+
+		<template id="run-row">
+			<tr class="data-row">
+				<td class="date-col"></td>
+				<td scope="column" class="temperature-col center-align"></td>
+				<td scope="column" class="time-col center-align"></td>
+				<td scope="column" class="distance-col"></td>
+				<td scope="column" class="pace-col center-align"></td>
+				<td scope="column" class="elevation-col center-align"></td>
+				<td scope="column" class="hr-col center-align"></td>
+				<td scope="column" class="shoes-col"></td>
+				<td scope="column" class="actions-col">
+					<button class="btn-link btn-edit">Edit</button>
+					<button class="btn-link btn-delete">Delete</button>
+				</td>
+			</tr>
+		</template>
+
+		<template id="monthly-summary-row">
+			<tr class="data-row summary-row">
+				<td colspan="9">
+					<span class="content">
+						<span class="month-cell bolded"></span>
+						<span><span class="bolded">Runs: </span></span>
+					</span>
+				</td>
+			</tr>
+		</template>
 	</body>
 </html>
