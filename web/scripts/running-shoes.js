@@ -76,82 +76,10 @@ function loadTable() {
 
 	if (runningShoes.length > 0) {
 		runningShoes.forEach((shoe) => {
-			const tr = document.createElement('tr');
-			tr.classList.add('data-row');
-
-			const nameCell = document.createElement('td');
-			nameCell.textContent = shoe.name;
-
-			tr.appendChild(nameCell);
-
-			const dateCell = document.createElement('td');
-			dateCell.classList.add('center-align');
-			dateCell.textContent = dayjs.tz(shoe.datePurchased, 'UTC').utc(true).format('YYYY');
-
-			tr.appendChild(dateCell);
-
-			const runsCell = document.createElement('td');
-			runsCell.classList.add('center-align');
-			runsCell.textContent = shoe.runCount;
-
-			tr.appendChild(runsCell);
-
-			const milesCell = document.createElement('td');
-			milesCell.classList.add('center-align');
-			milesCell.textContent = shoe.distance.toFixed(2);
-
-			tr.appendChild(milesCell);
-
 			if (shoe.isRetired) {
-				const yearsRunCell = document.createElement('td');
-				yearsRunCell.classList.add('center-align');
-
-				if (shoe.dateFirstRun && shoe.dateLastRun) {
-					const firstYearRun = dayjs.tz(shoe.dateFirstRun, 'UTC').utc(true).format('YYYY');
-					const lastYearRun = dayjs.tz(shoe.dateLastRun, 'UTC').utc(true).format('YYYY');
-
-					yearsRunCell.textContent = firstYearRun === lastYearRun ? firstYearRun : `${firstYearRun} - ${lastYearRun}`;
-				} else {
-					yearsRunCell.textContent = 'Unknown';
-				}
-
-				tr.appendChild(yearsRunCell);
+				retiredShoesfragment.appendChild(buildRetiredShoeRow(shoe));
 			} else {
-				const progressCell = document.createElement('td');
-
-				const progressBar = document.createElement('progress-bar');
-				progressBar.setAttribute('progress', shoe.lifespan);
-
-				progressCell.appendChild(progressBar);
-
-				tr.appendChild(progressCell);
-			}
-
-			const actionsCell = document.createElement('td');
-
-			const editButton = document.createElement('button');
-			editButton.textContent = 'Edit';
-			editButton.classList.add('btn-link');
-			editButton.addEventListener('click', function () {
-				editShoe(shoe.shoeId);
-			})
-
-			const deleteButton = document.createElement('button');
-			deleteButton.textContent = 'Delete';
-			deleteButton.classList.add('btn-link');
-			deleteButton.addEventListener('click', function () {
-				openDeleteConfirmation(shoe);
-			});
-
-			actionsCell.appendChild(editButton);
-			actionsCell.appendChild(deleteButton);
-
-			tr.appendChild(actionsCell);
-
-			if (shoe.isRetired) {
-				retiredShoesfragment.appendChild(tr);
-			} else {
-				activeShoesfragment.appendChild(tr);
+				activeShoesfragment.appendChild(buildActiveShoeRow(shoe));
 			}
 		});
 
@@ -172,6 +100,58 @@ function loadTable() {
 		showNoDataForTable('#active-running-shoes-table-body');
 		showNoDataForTable('#retired-running-shoes-table-body');
 	}
+}
+
+function buildActiveShoeRow(shoe) {
+	const template = document.querySelector('template#active-shoe-row');
+
+	const tr = template.content.cloneNode(true);
+
+	tr.querySelector('.name-col').textContent = shoe.name;
+	tr.querySelector('.date-col').textContent = dayjs.tz(shoe.datePurchased, 'UTC').utc(true).format('YYYY');
+	tr.querySelector('.runs-col').textContent = shoe.runCount;
+	tr.querySelector('.miles-col').textContent = shoe.distance.toFixed(2);
+	tr.querySelector('.lifespan-col progress-bar').setAttribute('progress', shoe.lifespan);
+
+	tr.querySelector('.btn-edit').addEventListener('click', function () {
+		editShoe(shoe.shoeId);
+	});
+
+	tr.querySelector('.btn-delete').addEventListener('click', function () {
+		openDeleteConfirmation(shoe);
+	});
+
+	return tr;
+}
+
+function buildRetiredShoeRow(shoe) {
+	const template = document.querySelector('template#retired-shoe-row');
+
+	const tr = template.content.cloneNode(true);
+
+	tr.querySelector('.name-col').textContent = shoe.name;
+	tr.querySelector('.date-col').textContent = dayjs.tz(shoe.datePurchased, 'UTC').utc(true).format('YYYY');
+	tr.querySelector('.runs-col').textContent = shoe.runCount;
+	tr.querySelector('.miles-col').textContent = shoe.distance.toFixed(2);
+	
+	if (shoe.dateFirstRun && shoe.dateLastRun) {
+		const firstYearRun = dayjs.tz(shoe.dateFirstRun, 'UTC').utc(true).format('YYYY');
+		const lastYearRun = dayjs.tz(shoe.dateLastRun, 'UTC').utc(true).format('YYYY');
+
+		tr.querySelector('.years-col').textContent = firstYearRun === lastYearRun ? firstYearRun : `${firstYearRun} - ${lastYearRun}`;
+	} else {
+		tr.querySelector('.years-col').textContent = 'Unknown';
+	}
+
+	tr.querySelector('.btn-edit').addEventListener('click', function () {
+		editShoe(shoe.shoeId);
+	});
+
+	tr.querySelector('.btn-delete').addEventListener('click', function () {
+		openDeleteConfirmation(shoe);
+	});
+
+	return tr;
 }
 
 function closeShoeForm() {

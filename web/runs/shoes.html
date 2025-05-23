@@ -183,5 +183,35 @@
 
 		<input type="hidden" id="delete-shoe-id" value="0" />
 		<confirm-dialog></confirm-dialog>
+
+		<template id="active-shoe-row">
+			<tr>
+				<td class="name-col"></td>
+				<td class="date-col center-align"></td>
+				<td class="runs-col center-align"></td>
+				<td class="miles-col center-align"></td>
+				<td class="lifespan-col">
+					<progress-bar progress="0"></progress-bar>
+				</td>
+				<td class="actions-col">
+					<button class="btn-link btn-edit">Edit</button>
+					<button class="btn-link btn-delete">Delete</button>
+				</td>
+			</tr>
+		</template>
+
+		<template id="retired-shoe-row">
+			<tr>
+				<td class="name-col"></td>
+				<td class="date-col center-align"></td>
+				<td class="runs-col center-align"></td>
+				<td class="miles-col center-align"></td>
+				<td class="years-col center-align"></td>
+				<td class="actions-col">
+					<button class="btn-link btn-edit">Edit</button>
+					<button class="btn-link btn-delete">Delete</button>
+				</td>
+			</tr>
+		</template>
 	</body>
 </html>

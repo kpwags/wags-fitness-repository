@@ -3,7 +3,7 @@ type Shoe = {
     name: string;
     datePurchased: Date | string | null;
     isRetired: boolean;
-    milesRun?: number;
+    distance?: number;
     runCount?: number;
     dateFirstRun?: Date | string | null;
     dateLastRun?: Date | string | null;
