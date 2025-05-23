@@ -20,6 +20,7 @@
 		<script src="/components/progress-bar.js"></script>
 		<script src="/components/confirm-dialog.js"></script>
 		<script src="/components/submit-form-button.js"></script>
+		<script src="/components/run-form.js"></script>
 
 		<script src="/scripts/main.js"></script>
 		<script src="/scripts/api.js"></script>
@@ -120,80 +121,7 @@
 			<wags-fitness-footer></wags-fitness-footer>
 		</div>
 
-		<dialog class="form-dialog" id="run-form-dialog">
-			<h3>Add Run</h3>
-
-			<div id="modal-error" class="alert error hidden"></div>
-
-			<form name="run-form">
-				<fieldset>
-					<legend hidden>Add Run</legend>
-					<input type="hidden" id="runId" name="runId" value="0" />
-
-					<div class="form-field">
-						<label for="date-run">
-							<span class="required">*</span>Date
-							<input type="date" name="date-run" id="date-run" />
-						</label>
-					</div>
-
-					<div class="form-field dual">
-						<label for="distance">
-							<span class="required">*</span>Distance
-							<input type="text" name="distance" id="distance" required />
-						</label>
-						<label for="hours">
-							<span class="required">*</span>Hours
-							<input type="text" name="hours" id="hours" required />
-						</label>
-						<label for="minutes">
-							<span class="required">*</span>Minutes
-							<input type="text" name="minutes" id="minutes" required />
-						</label>
-						<label for="seconds">
-							<span class="required">*</span>Seconds
-							<input type="text" name="seconds" id="seconds" required />
-						</label>
-					</div>
-
-					<div class="form-field dual">
-						<label for="temperature">
-							<span class="required">*</span>Temperature
-							<input type="text" name="temperature" id="temperature" required />
-						</label>
-						<label for="heart-rate">
-							<span class="required">*</span>Heart Rate
-							<input type="text" name="heart-rate" id="heart-rate" required />
-						</label>
-						<label for="elevation">
-							<span class="required">*</span>Elevation
-							<input type="text" name="elevation" id="elevation" required />
-						</label>
-					</div>
-
-					<div class="form-field">
-						<label for="shoe-id">
-							Shoe
-							<select name="shoe-id" id="shoe-id">
-								<option value="0">Not Specified</option>
-							</select>
-						</label>
-					</div>
-
-					<div class="actions">
-	                    <button type="button" class="btn-ghost" id="form-dialog-cancel">Cancel</button>
-						<submit-form-button>
-							<button type="submit" class="btn-primary">
-								<span class="btn-processing-content">
-									<span class="loader" style="display:none"></span>
-									<span class="button-text">Save</span>
-								</span>
-							</button>
-						</submit-form-button>
-	                </div>
-	            </fieldset>
-			</form>
-		</dialog>
+		<run-form></run-form>
 
 		<input type="hidden" id="delete-run-id" value="0" />
 		<confirm-dialog></confirm-dialog>
@@ -218,10 +146,15 @@
 		<template id="monthly-summary-row">
 			<tr class="data-row summary-row">
 				<td colspan="9">
-					<span class="content">
-						<span class="month-cell bolded"></span>
-						<span><span class="bolded">Runs: </span></span>
-					</span>
+					<div class="content">
+						<div class="month-cell"></div>
+						<div>Runs:<span class="runs-cell"></span></div>
+						<div>Distance:<span class="distance-cell"></span></div>
+						<div>Avg. Pace:<span class="pace-cell"></span></div>
+						<div>Avg. Distance:<span class="avg-distance-cell"></span></div>
+						<div>Avg. Heart Rate:<span class="hr-cell"></span></div>
+						<div>Avg. Temperature:<span class="temp-cell"></span></div>
+					</div>
 				</td>
 			</tr>
 		</template>

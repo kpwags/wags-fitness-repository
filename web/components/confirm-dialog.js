@@ -27,7 +27,14 @@ class ConfirmDialog extends HTMLElement {
 					<div class="text"></div>
 				</div>
 				<div class="confirm-actions">
-					<button type="button" class="btn-danger confirm-dialog-yes">Yes</button>
+					<submit-form-button class="confirm-dialog-yes-button">
+						<button type="button" class="btn-danger confirm-dialog-yes">
+							<span class="btn-processing-content">
+								<span class="loader" style="display:none"></span>
+								<span class="button-text">Yes</span>
+							</span>
+						</button>
+					</submit-form-button>
 					<button type="button" class="btn-danger-ghost confirm-dialog-no">No</button>
 				</div>
 			</dialog>

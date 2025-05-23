@@ -9,8 +9,8 @@ class SubmitFormButton extends HTMLElement {
 	}
 
 	attributeChangedCallback(property, oldValue, newValue) {
-		const loadingSpinner = document.querySelector('button[type="submit"] .loader');
-		const buttonText = document.querySelector('button[type="submit"] .button-text');
+		const loadingSpinner = this.querySelector('button .loader');
+		const buttonText = this.querySelector('button .button-text');
 
 
         if (oldValue !== newValue && property === 'processing') {

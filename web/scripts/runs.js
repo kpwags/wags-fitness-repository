@@ -89,100 +89,28 @@ function loadTable() {
 			tableFragment.appendChild(summaryRow);
 		}
 
-		// const tr = document.createElement('tr');
-		// tr.classList.add('data-row');
-
-		// const dateCell = document.createElement('td');
-		// dateCell.textContent = dateRun.format('M/D/YYYY');
-
-		// tr.appendChild(dateCell);
-
-		// const tempCell = document.createElement('td');
-		// tempCell.classList.add('center-align');
-		// tempCell.textContent = run.temperature ? `${run.temperature}ºF` : '';
-
-		// tr.appendChild(tempCell);
-
-		// const timeCell = document.createElement('td');
-		// timeCell.classList.add('center-align');
-		// timeCell.textContent = run.runTime;
-
-		// tr.appendChild(timeCell);
-
-		// const distanceCell = document.createElement('td');
-		// distanceCell.classList.add('center-align');
-		// distanceCell.textContent = run.distance;
-
-		// tr.appendChild(distanceCell);
-
-		// const paceCell = document.createElement('td');
-		// paceCell.classList.add('center-align');
-		// paceCell.textContent = `${run.pace}/mi.`;
-
-		// tr.appendChild(paceCell);
-
-		// const elevationCell = document.createElement('td');
-		// elevationCell.classList.add('center-align');
-		// elevationCell.textContent = run.elevation ? run.elevation : '';
-
-		// tr.appendChild(elevationCell);
-
-		// const heartRateCell = document.createElement('td');
-		// heartRateCell.classList.add('center-align');
-		// heartRateCell.textContent = run.heartRate ? run.heartRate : '';
-
-		// tr.appendChild(heartRateCell);
-
-		// const shoeCell = document.createElement('td');
-		// shoeCell.textContent = run.shoeName ? run.shoeName : '';
-
-		// tr.appendChild(shoeCell);
-
-		// const actionsCell = document.createElement('td');
-
-		// const editButton = document.createElement('button');
-		// editButton.textContent = 'Edit';
-		// editButton.classList.add('btn-link');
-		// editButton.addEventListener('click', function () {
-		// 	editRun(run);
-		// })
-
-		// const deleteButton = document.createElement('button');
-		// deleteButton.textContent = 'Delete';
-		// deleteButton.classList.add('btn-link');
-		// deleteButton.addEventListener('click', function () {
-		// 	openDeleteConfirmation(run);
-		// });
-
-		// actionsCell.appendChild(editButton);
-		// actionsCell.appendChild(deleteButton);
-
-		// tr.appendChild(actionsCell);
-
-		// tableFragment.appendChild(tr);
-
 		const template = document.querySelector('template#run-row');
 
-		const clone = template.content.cloneNode(true);
+		const tr = template.content.cloneNode(true);
 
-		clone.querySelector('.date-col').textContent = dateRun.format('M/D/YYYY');
-		clone.querySelector('.temperature-col').textContent = run.temperature ? `${run.temperature}ºF` : '';
-		clone.querySelector('.time-col').textContent = run.runTime;
-		clone.querySelector('.distance-col').textContent = run.distance;
-		clone.querySelector('.pace-col').textContent = `${run.pace}/mi.`;
-		clone.querySelector('.elevation-col').textContent = run.elevation ? run.elevation : '';
-		clone.querySelector('.hr-col').textContent = run.heartRate ? run.heartRate : '';
-		clone.querySelector('.shoes-col').textContent = run.shoeName ? run.shoeName : '';
+		tr.querySelector('.date-col').textContent = dateRun.format('M/D/YYYY');
+		tr.querySelector('.temperature-col').textContent = run.temperature ? `${run.temperature}ºF` : '';
+		tr.querySelector('.time-col').textContent = run.runTime;
+		tr.querySelector('.distance-col').textContent = run.distance;
+		tr.querySelector('.pace-col').textContent = `${run.pace}/mi.`;
+		tr.querySelector('.elevation-col').textContent = run.elevation ? run.elevation : '';
+		tr.querySelector('.hr-col').textContent = run.heartRate ? run.heartRate : '';
+		tr.querySelector('.shoes-col').textContent = run.shoeName ? run.shoeName : '';
 
-		clone.querySelector('.btn-edit').addEventListener('click', function () {
+		tr.querySelector('.btn-edit').addEventListener('click', function () {
 			editRun(run);
 		});
 
-		clone.querySelector('.btn-delete').addEventListener('click', function () {
+		tr.querySelector('.btn-delete').addEventListener('click', function () {
 			openDeleteConfirmation(run);
 		});
 
-		tableFragment.appendChild(clone);
+		tableFragment.appendChild(tr);
 
 		previousDateRun = dateRun;
 	});
@@ -192,41 +120,26 @@ function loadTable() {
 }
 
 function buildMonthlySummaryRow(rows) {
-	const tr = document.createElement('tr');
-	tr.classList.add('data-row');
-	tr.classList.add('summary-row');
+	const template = document.querySelector('template#monthly-summary-row');
+
+	const tr = template.content.cloneNode(true);
 
 	const month = dayjs.tz(rows[0].dateRan, 'UTC').utc(true);
 
-	const summaryCell = document.createElement('td');
-	summaryCell.colSpan = 9;
-
-	const contentSpan = document.createElement('span');
-	contentSpan.classList.add('content');
-
-	const monthYearSpan = document.createElement('span');
-	monthYearSpan.classList.add('bolded');
-	monthYearSpan.textContent = month.format('MMMM YYYY');
-
-	contentSpan.appendChild(monthYearSpan);
-
-	contentSpan.appendChild(titledSpan('Runs', rows.length));
+	tr.querySelector('.month-cell').textContent = month.format('MMMM YYYY');
+	tr.querySelector('.runs-cell').textContent = rows.length;
+	tr.querySelector('.distance-cell').textContent = sumValues(rows.map((r) => r.distance)).toFixed(2);
+	tr.querySelector('.pace-cell').textContent = `${calculateAveragePaceForRuns(rows)}/mi.`;
+	tr.querySelector('.avg-distance-cell').textContent = calculateAverage(rows.map((r) => r.distance)).toFixed(2);
 
 	const rowsWithTemp = rows.filter((r) => r.temperature);
-
-	contentSpan.appendChild(titledSpan('Distance', sumValues(rows.map((r) => r.distance)).toFixed(2)));
-
-	contentSpan.appendChild(titledSpan('Average Pace', `${calculateAveragePaceForRuns(rows)}/mi.`))
-	
-	contentSpan.appendChild(titledSpan('Average Distance', calculateAverage(rows.map((r) => r.distance)).toFixed(2)));
-
 	const rowsWithHeartRate = rows.filter((r) => r.heartRate);
 
 	if (rowsWithHeartRate.length > 0) {
 		const averageHeartRate = Math.round(calculateAverage(rowsWithHeartRate.map((r) => r.heartRate)));
 		
 		if (averageHeartRate > 0) {
-			contentSpan.appendChild(titledSpan('Average Heart Rate', averageHeartRate));
+			tr.querySelector('.hr-cell').textContent = averageHeartRate;
 		}
 	}
 
@@ -234,19 +147,15 @@ function buildMonthlySummaryRow(rows) {
 		const averageTemperature = Math.round(calculateAverage(rowsWithTemp.map((r) => r.temperature)));
 		
 		if (averageTemperature > 0) {
-			contentSpan.appendChild(titledSpan('Average Temperature', `${averageTemperature}ºF`));
+			tr.querySelector('.temp-cell').textContent = `${averageTemperature}ºF`;
 		}
 	}
-	
-	summaryCell.appendChild(contentSpan);
-	
-	tr.appendChild(summaryCell);
 
 	return tr;
 }
 
 function setProcessing(isProcessing) {
-	const btn = document.querySelector('submit-form-button');
+	const btn = document.querySelector('submit-form-button.save-run-submit');
 
 	if (isProcessing) {
 		btn.setAttribute('processing', 'true');
@@ -357,18 +266,36 @@ function openDeleteConfirmation(run) {
 	document.querySelector('dialog.confirm-dialog').showModal();
 }
 
+function setDeleteConfirmationProcessing(isProcessing) {
+	const btn = document.querySelector('submit-form-button.confirm-dialog-yes-button');
+
+	if (isProcessing) {
+		btn.setAttribute('processing', 'true');
+		btn.setAttribute('buttontext', 'Deleting');
+		document.querySelectorAll('.confirm-dialog button').forEach((b) => b.setAttribute('disabled', 'true'));
+	} else {
+		btn.setAttribute('processing', 'false');
+		btn.setAttribute('buttontext', 'Yes');
+		document.querySelectorAll('.confirm-dialog button').forEach((b) => b.removeAttribute('disabled'));
+	}
+}
+
 async function deleteRun() {
+	setDeleteConfirmationProcessing(true);
+
 	const runId = document.getElementById('delete-run-id').value;
 
 	const [, error] = await Api.Delete(`run/${runId}`);
 
 	if (error) {
 		showPageError(error);
+		setDeleteConfirmationProcessing(false);
 		document.querySelector('dialog.confirm-dialog').close();
 		return;
 	}
 
 	await loadRuns();
 
+	setDeleteConfirmationProcessing(false);
 	document.querySelector('dialog.confirm-dialog').close();
 }
