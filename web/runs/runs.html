@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#0b5026" />
+
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+		<link rel="stylesheet" type="text/css" href="/styles/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/styles/variables.css" />
+		<link rel="stylesheet" type="text/css" href="/styles/main.css" />
+
+		<script src="/components/header.js"></script>
+		<script src="/components/sidebar.js"></script>
+		<script src="/components/footer.js"></script>
+		<script src="/components/loading-spinner.js"></script>
+		<script src="/components/progress-bar.js"></script>
+		<script src="/components/confirm-dialog.js"></script>
+		<script src="/components/submit-form-button.js"></script>
+		<script src="/components/run-form.js"></script>
+
+		<script src="/scripts/main.js"></script>
+		<script src="/scripts/api.js"></script>
+		<script src="/scripts/runs.js"></script>
+		<script src="/scripts/run-utilities.js"></script>
+
+		<script src="/scripts/lib/dayjs.min.js"></script>
+		<script src="/scripts/lib/dayjs.timezone.js"></script>
+		<script src="/scripts/lib/dayjs.utc.js"></script>
+
+		<script>
+			dayjs.extend(window.dayjs_plugin_utc);
+			dayjs.extend(window.dayjs_plugin_timezone);
+		</script>
+
+		<title>Runs - Wags Fitness Repository</title>
+
+		<style type="text/css">
+			th.date-col {
+				min-width: 110px;
+			}
+
+			th.temperature-col {
+				min-width: 100px;
+			}
+
+			th.time-col {
+				min-width: 100px;
+			}
+
+			th.distance-col {
+				min-width: 120px;
+			}
+
+			th.pace-col {
+				min-width: 130px;
+			}
+
+			th.elevation-col {
+				min-width: 100px;
+			}
+
+			th.hr-col {
+				min-width: 100px;
+			}
+
+			th.shoes-col {
+				min-width: 200px;
+			}
+
+			th.actions-col {
+				min-width: 175px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="page-content">
+			<wags-fitness-header></wags-fitness-header>
+			<wags-fitness-sidebar activeLink="runs"></wags-fitness-sidebar>
+			<main>
+				<div class="runs">
+					<h1>Runs</h1>
+
+					<div id="page-error" class="alert error hidden"></div>
+
+					<div class="runs">
+						<div class="table-actions">
+							<button type="button" class="btn-primary" id="add-new-run">Add Run</button>
+						</div>
+						<div class="table-wrapper">
+							<table>
+								<thead>
+									<tr>
+										<th scope="column" class="date-col">Date</th>
+										<th scope="column" class="temperature-col">Temp</th>
+										<th scope="column" class="time-col">Time</th>
+										<th scope="column" class="distance-col">Distance</th>
+										<th scope="column" class="pace-col">Pace</th>
+										<th scope="column" class="elevation-col">Elevation</th>
+										<th scope="column" class="hr-col">Heart Rate</th>
+										<th scope="column" class="shoes-col">Shoes</th>
+										<th scope="column" class="actions-col">Actions</th>
+									</tr>
+								</thead>
+								<tbody id="runs-table-body">
+									<tr class="loading">
+										<td colspan="9"><loading-spinner></loading-spinner></td>
+									</tr>
+									<tr class="no-content hidden">
+										<td colspan="9">No Runs</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</main>
+			<wags-fitness-footer></wags-fitness-footer>
+		</div>
+
+		<run-form></run-form>
+
+		<input type="hidden" id="delete-run-id" value="0" />
+		<confirm-dialog></confirm-dialog>
+
+		<template id="run-row">
+			<tr class="data-row">
+				<td class="date-col"></td>
+				<td scope="column" class="temperature-col center-align"></td>
+				<td scope="column" class="time-col center-align"></td>
+				<td scope="column" class="distance-col"></td>
+				<td scope="column" class="pace-col center-align"></td>
+				<td scope="column" class="elevation-col center-align"></td>
+				<td scope="column" class="hr-col center-align"></td>
+				<td scope="column" class="shoes-col"></td>
+				<td scope="column" class="actions-col">
+					<button class="btn-link btn-edit">Edit</button>
+					<button class="btn-link btn-delete">Delete</button>
+				</td>
+			</tr>
+		</template>
+
+		<template id="monthly-summary-row">
+			<tr class="data-row summary-row">
+				<td colspan="9">
+					<div class="content">
+						<div class="month-cell"></div>
+						<div>Runs:<span class="runs-cell"></span></div>
+						<div>Distance:<span class="distance-cell"></span></div>
+						<div>Avg. Pace:<span class="pace-cell"></span></div>
+						<div>Avg. Distance:<span class="avg-distance-cell"></span></div>
+						<div>Avg. Heart Rate:<span class="hr-cell"></span></div>
+						<div>Avg. Temperature:<span class="temp-cell"></span></div>
+					</div>
+				</td>
+			</tr>
+		</template>
+	</body>
+</html>

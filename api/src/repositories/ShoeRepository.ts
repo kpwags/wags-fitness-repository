@@ -65,7 +65,7 @@ class ShoeRepository {
 				shoesWithRunData.push({
 					...shoe,
 					runCount: data.length,
-					milesRun: data.reduce((a, { milesRun }) => a + milesRun, 0),
+					milesRun: data.reduce((a, { distance }) => a + distance, 0),
 					dateFirstRun: convertDateToJsonDate(data[0].dateRan),
 					dateLastRun: convertDateToJsonDate(data[data.length - 1].dateRan),
 					lifespan: calculateLifespan(data),
@@ -104,7 +104,7 @@ class ShoeRepository {
 			datePurchased: convertDateToJsonDate(data.DatePurchased),
 			isRetired: convertToBoolean(data.IsRetired),
 			runCount: runs.length,
-			milesRun: runs.reduce((a, { milesRun }) => a + milesRun, 0),
+			milesRun: runs.reduce((a, { distance }) => a + distance, 0),
 			dateFirstRun: convertDateToJsonDate(runs[0].dateRan),
 			dateLastRun: convertDateToJsonDate(runs[runs.length - 1].dateRan),
 			lifespan: calculateLifespan(runs),
@@ -115,19 +115,16 @@ class ShoeRepository {
 		const error = await db.Execute(addShoe, [shoe.name, shoe.datePurchased, shoe.isRetired]);
 
 		if (error) {
-			console.log({ insertError: error })
 			return [error, null];
 		}
 
 		const [lastInsertedIdError, lastInsertedId] = await this.GetLastInsertedRowId();
 
 		if (lastInsertedIdError) {
-			console.log({ lastInsertError: error })
 			return [lastInsertedIdError, null];
 		}
 
 		if (!lastInsertedId) {
-			console.log({ lastInsert: 'Invalid ID' })
 			return ['Unable to retrieve ID', null];
 		}
 

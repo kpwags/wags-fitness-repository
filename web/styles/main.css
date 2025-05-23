@@ -474,6 +474,31 @@ tr.no-content td {
 	padding: 16px;
 	text-align: center;
 }
+
+tr.summary-row td {
+	border-top: 3px solid var(--grey-5);
+	border-bottom: 3px solid var(--grey-5);
+	background-color: var(--grey-1) !important;
+}
+
+tr.summary-row td .content {
+	display: flex;
+	gap: 48px;
+	justify-content: flex-start;
+}
+
+tr.summary-row td .content div {
+	font-weight: bold;
+}
+
+tr.summary-row td .content div span {
+	font-weight: normal;
+	padding-left: 2px;
+}
+
+tr.summary-row td .content div:has(span:empty) {
+	display: none;
+}
 /* END TABLES */
 
 /* FORM DIALOG */
@@ -805,5 +830,9 @@ ul.tag-list li {
 .slim-page {
 	width: 800px;
 	margin: 0 auto;
+}
+
+.bolded {
+	font-weight: 700;
 }
 /* END UTILITY CLASSES */
