@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#0b5026" />
+
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+		<link rel="stylesheet" type="text/css" href="/styles/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/styles/variables.css" />
+		<link rel="stylesheet" type="text/css" href="/styles/main.css" />
+		<link rel="stylesheet" type="text/css" href="/styles/runs.css" />
+
+		<script src="/components/header.js"></script>
+		<script src="/components/sidebar.js"></script>
+		<script src="/components/footer.js"></script>
+		<script src="/components/loading-spinner.js"></script>
+		<script src="/components/progress-bar.js"></script>
+		<script src="/components/confirm-dialog.js"></script>
+		<script src="/components/submit-form-button.js"></script>
+		<script src="/components/run-form.js"></script>
+
+		<script src="/scripts/main.js"></script>
+		<script src="/scripts/api.js"></script>
+		<script src="/scripts/runs-overview.js"></script>
+		<script src="/scripts/run-utilities.js"></script>
+
+		<script src="/scripts/lib/dayjs.min.js"></script>
+		<script src="/scripts/lib/dayjs.timezone.js"></script>
+		<script src="/scripts/lib/dayjs.utc.js"></script>
+
+		<script>
+			dayjs.extend(window.dayjs_plugin_utc);
+			dayjs.extend(window.dayjs_plugin_timezone);
+		</script>
+
+		<title>Running Overview - Wags Fitness Repository</title>
+	</head>
+	<body>
+		<div class="page-content">
+			<wags-fitness-header></wags-fitness-header>
+			<wags-fitness-sidebar activeLink="runs-overview"></wags-fitness-sidebar>
+			<main>
+				<h1>Running Overview</h1>
+
+				<div id="page-error" class="alert error hidden"></div>
+
+				<div class="running-overview">
+					<div class="column">
+						<table class="running-totals-table">
+							<thead>
+								<tr>
+									<th colspan="2">Running Totals</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="title-col">Runs</td>
+									<td class="value-col runs-cell"></td>
+								</tr>
+								<tr>
+									<td class="title-col">Distance</td>
+									<td class="value-col distance-cell"></td>
+								</tr>
+								<tr>
+									<td class="title-col">Time</td>
+									<td class="value-col time-cell"></td>
+								</tr>
+								<tr>
+									<td class="title-col">Avg. Pace</td>
+									<td class="value-col pace-cell"></td>
+								</tr>
+								<tr>
+									<td class="title-col">Avg. Distance</td>
+									<td class="value-col avg-distance-cell"></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<h2>Yearly Summary</h2>
+
+						<div class="table-wrapper">
+							<table>
+								<thead>
+									<tr>
+										<th scope="column" class="year-col">Year</th>
+										<th scope="column" class="runs-col">Runs</th>
+										<th scope="column" class="distance-col">Distance</th>
+										<th scope="column" class="time-col">Time</th>
+										<th scope="column" class="pace-col">Avg. Pace</th>
+										<th scope="column" class="avg-disatance-col">Avg. Distance</th>
+										<th scope="column" class="max-distance-col">Max Distance</th>
+									</tr>
+								</thead>
+								<tbody id="yearly-summary-table-body">
+									<tr class="loading">
+										<td colspan="7"><loading-spinner></loading-spinner></td>
+									</tr>
+									<tr class="no-content hidden">
+										<td colspan="7">No Runs</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<h2>Recent Runs</h2>
+
+						<div class="table-wrapper">
+							<table>
+								<thead>
+									<tr>
+										<th scope="column" class="date-col">Date</th>
+										<th scope="column" class="time-col">Time</th>
+										<th scope="column" class="distance-col">Distance</th>
+										<th scope="column" class="pace-col">Pace</th>
+										<th scope="column" class="elevation-col">Elevation</th>
+										<th scope="column" class="hr-col">Heart Rate</th>
+									</tr>
+								</thead>
+								<tbody id="runs-table-body">
+									<tr class="loading">
+										<td colspan="7"><loading-spinner></loading-spinner></td>
+									</tr>
+									<tr class="no-content hidden">
+										<td colspan="7">No Runs</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="column">CHARTS</div>
+				</div>
+			</main>
+			<wags-fitness-footer></wags-fitness-footer>
+		</div>
+
+		<run-form></run-form>
+
+		<template id="year-summary-row">
+			<tr class="data-row">
+				<td class="year-col center-align"></td>
+				<td class="runs-col center-align"></td>
+				<td class="distance-col center-align"></td>
+				<td class="time-col center-align"></td>
+				<td class="pace-col center-align"></td>
+				<td class="avg-distance-col center-align"></td>
+				<td class="max-distance-col center-align"></td>
+			</tr>
+		</template>
+
+		<template id="run-row">
+			<tr class="data-row">
+				<td class="date-col"></td>
+				<td class="time-col center-align"></td>
+				<td class="distance-col center-align"></td>
+				<td class="pace-col center-align"></td>
+				<td class="elevation-col center-align"></td>
+				<td class="hr-col center-align"></td>
+			</tr>
+		</template>
+	</body>
+</html>

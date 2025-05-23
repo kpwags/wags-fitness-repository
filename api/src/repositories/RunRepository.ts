@@ -1,6 +1,8 @@
 import { db } from '../lib/db';
+import dayjs from 'dayjs';
 
 import Run from '../models/Run';
+import { RunOverview, RunTotals, YearlySummary } from '../models/RunOverview';
 
 import {
 	addRun,
@@ -9,8 +11,13 @@ import {
 	getRunsByShoe,
 	updateRun,
 } from '../queries/runs';
-import displayRunTime from '../lib/displayRunTime';
-import { CalculatePace } from '../lib/runFunctions';
+import {
+	addRunTimes,
+	buildYearlySummary,
+	calculatePace,
+	displayRunTime,
+	getTotalDistance,
+} from '../lib/runFunctions';
 
 type RunQueryReturn = {
 	RunId: number;
@@ -51,7 +58,7 @@ class RunRepository {
 					seconds: row.Seconds,
 				}),
 				distance: row.Distance,
-				pace: CalculatePace(row.Distance, row.Hours, row.Minutes, row.Seconds),
+				pace: calculatePace(row.Distance, row.Hours, row.Minutes, row.Seconds),
 				elevation: row.Elevation,
 				heartRate: row.HeartRate,
 				shoeId: row.ShoeId,
@@ -85,7 +92,7 @@ class RunRepository {
 					seconds: row.Seconds,
 				}),
 				distance: row.Distance,
-				pace: CalculatePace(row.Distance, row.Hours, row.Minutes, row.Seconds),
+				pace: calculatePace(row.Distance, row.Hours, row.Minutes, row.Seconds),
 				elevation: row.Elevation,
 				heartRate: row.HeartRate,
 				shoeId: row.ShoeId,
@@ -142,6 +149,78 @@ class RunRepository {
 
 		return error;
 	};
+
+	static async GetOverview(): Promise<[error: string | null, overview: RunOverview | null]> {
+		const [runsError, runs] = await this.GetAllRuns();
+
+		if (runsError) {
+			return [runsError, null];
+		}
+
+		const totalDistance = getTotalDistance(runs);
+		const totalTime = addRunTimes(runs.map((r) => ({ hours: r.hours, minutes: r.minutes, seconds: r.seconds })));
+
+		const totals: RunTotals = {
+			runCount: runs.length,
+			distance: parseFloat(totalDistance.toFixed(2)),
+			time: displayRunTime(totalTime),
+			averagePace: calculatePace(totalDistance, totalTime.hours, totalTime.minutes, totalTime.seconds),
+			averageDistance: parseFloat((totalDistance / runs.length).toFixed(2)),
+		};
+
+		const years = [...new Set(runs.map((r) => parseInt(dayjs(r.dateRan).format('YYYY'))))];
+		years.sort();
+
+		const yearData: YearlySummary[] = [];
+
+		years.forEach((y) => {
+			const runsForYear = runs.filter((r) => parseInt(dayjs(r.dateRan).format('YYYY')) === y);
+
+			yearData.push(buildYearlySummary(runsForYear, y));
+		});
+
+		return [
+			null,
+			{
+				totals,
+				years: yearData,
+			},
+		]
+	}
+
+	static async GetRecentRuns(limit = 10): Promise<[error: string | null, runs: Run[]]> {
+		const [error, data] = await db.Query<RunQueryReturn>(getAllRuns);
+
+		if (error) {
+			return [error, []];
+		}
+
+		const runs: Run[] = [];
+
+		data.slice(0, limit).forEach((row) => {
+			runs.push({
+				runId: row.RunId,
+				dateRan: row.DateRan,
+				temperature: row.Temperature,
+				hours: row.Hours,
+				minutes: row.Minutes,
+				seconds: row.Seconds,
+				runTime: displayRunTime({
+					hours: row.Hours,
+					minutes: row.Minutes,
+					seconds: row.Seconds,
+				}),
+				distance: row.Distance,
+				pace: calculatePace(row.Distance, row.Hours, row.Minutes, row.Seconds),
+				elevation: row.Elevation,
+				heartRate: row.HeartRate,
+				shoeId: row.ShoeId,
+				shoeName: row.ShoeName,
+			});
+		});
+
+		return [null, runs];
+	}
 }
 
 export default RunRepository;

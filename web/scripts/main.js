@@ -102,20 +102,8 @@ function sumValues(values) {
 	return values.reduce((a, b) => a + b, 0)
 }
 
-function titledSpan(title, value) {
-	const span = document.createElement('span');
-
-	const titleSpan = document.createElement('span');
-	titleSpan.classList.add('bolded');
-	titleSpan.textContent = `${title}: `;
-
-	const valueSpan = document.createElement('span');
-	valueSpan.textContent = value;
-
-	span.appendChild(titleSpan);
-	span.appendChild(valueSpan);
-
-	return span;
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function buildSelectList(data, valueKey, textKey) {

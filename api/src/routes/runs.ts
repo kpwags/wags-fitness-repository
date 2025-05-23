@@ -4,10 +4,40 @@ import Run from '../models/Run';
 
 const router = express.Router();
 
+router.get('/overview', (_, res) => {
+    RunRepository.GetOverview()
+        .then(([error, data]) => {
+            if (error) {
+                return res.status(400).json({ error });
+            }
+
+            res.json(data);
+        })
+        .catch((e) => {
+            return res.status(400).json({ error: e });
+        });
+});
+
 router.get('/shoe/:id', (req, res) => {
 	const id = parseInt(req.params.id);
 
 	RunRepository.GetRunsForShoe(id)
+		.then(([error, data]) => {
+			if (error) {
+				return res.status(400).json({ error });
+			}
+
+			res.json(data);
+		})
+		.catch((e) => {
+			return res.status(400).json({ error: e });
+		});
+});
+
+router.get('/recent/:limit', (req, res) => {
+	const limit = parseInt(req.params.limit);
+
+	RunRepository.GetRecentRuns(limit)
 		.then(([error, data]) => {
 			if (error) {
 				return res.status(400).json({ error });

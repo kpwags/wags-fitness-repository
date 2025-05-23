@@ -1,0 +1,36 @@
+.running-overview {
+	display: flex;
+	column-gap: 64px;
+}
+
+.running-overview .column {
+	width: 50%;
+}
+
+table {
+	margin: 16px 0 32px;
+}
+
+.running-totals-table th {
+	text-align: center;
+}
+
+.running-totals-table td.title-col {
+	width: 70%;
+}
+
+.running-totals-table td.value-col {
+	width: 30%;
+	text-align: center;
+}
+
+@media (max-width: 500px) {
+	.running-overview {
+		flex-direction: column;
+		row-gap: 32px;
+	}
+
+	.running-overview .column {
+		width: 100%;
+	}
+}
