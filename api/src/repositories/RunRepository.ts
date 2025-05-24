@@ -235,7 +235,7 @@ class RunRepository {
 		let currentRuns: Run[] = [];
 
 		data.forEach((row) => {
-			const month = dayjs(row.DateRan).format('MM-YYYY');
+			const month = dayjs(row.DateRan).format('MMM YYYY');
 
 			if (month !== currentMonth) {
 				if (currentMonth !== 'START') {

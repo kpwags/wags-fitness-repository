@@ -1,5 +1,3 @@
-import Chart from './lib/chart.js/auto'
-
 let overviewData = {
 	totals: {
 		runCount: 0,
@@ -67,6 +65,8 @@ function loadYearlySummary() {
 
 	document.querySelector('#yearly-summary-table-body tr.loading')?.classList.add('hidden');
 	document.getElementById('yearly-summary-table-body').appendChild(tableFragment);
+
+	buildYearlyChart();
 }
 
 async function loadRecentRuns() {
@@ -120,7 +120,7 @@ async function loadRecentRunTrends() {
 		return;
 	}
 
-	const chartData = data.map((d) => ({
+	const chartData = data.reverse().map((d) => ({
 		label: d.month,
 		value: d.runs.reduce((a, { distance }) => a + distance, 0),
 	}));
@@ -135,8 +135,53 @@ async function loadRecentRunTrends() {
 					{
 						label: 'Running Distance by Month',
 						data: chartData.map((c) => c.value),
+						backgroundColor: theme.green3,
 					}
 				]
+			},
+			options: {
+				plugins: {
+					legend: {
+						display: false,
+					},
+				}
+			}
+		}
+	);
+}
+
+function buildYearlyChart() {
+	const yearData = structuredClone(overviewData.years);
+
+	const chartData = yearData
+		.reverse()
+		.slice(0, 10)
+		.reverse()
+		.map((d) => ({
+			label: d.year,
+			value: d.distance,
+		}));
+
+	new Chart(
+		document.getElementById('yearly-run-trends'),
+		{
+			type: 'bar',
+			data: {
+				labels: chartData.map((c) => c.label),
+				datasets: [
+					{
+						label: 'Running Distance by Year',
+						data: chartData.map((c) => c.value),
+						backgroundColor: theme.green5,
+					}
+				]
+			},
+			options: {
+				plugins: {
+					legend: {
+						display: false,
+					},
+				}
 			}
 		}
 	);

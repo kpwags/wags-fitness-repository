@@ -30,10 +30,10 @@
 		<script src="/scripts/lib/dayjs.min.js"></script>
 		<script src="/scripts/lib/dayjs.timezone.js"></script>
 		<script src="/scripts/lib/dayjs.utc.js"></script>
-		<script  type="module" src="/scripts/lib/chart.js"></script>
+		<script src="/scripts/lib/chart.umd.js"></script>
 
 
-		<script type="module" src="/scripts/runs-overview.js"></script>
+		<script src="/scripts/runs-overview.js"></script>
 
 		<script>
 			dayjs.extend(window.dayjs_plugin_utc);
@@ -135,8 +135,11 @@
 						</div>
 					</div>
 					<div class="column">
-						<h2>Recent Running Trends</h2>
-						<div class="vertical-chart" id="recent-run-trends"></div>
+						<h2>Recent Month Summary</h2>
+						<canvas id="recent-run-trends" class="chart"></canvas>
+
+						<h2>Yearly Summary</h2>
+						<canvas id="yearly-run-trends" class="chart"></canvas>
 					</div>
 				</div>
 			</main>

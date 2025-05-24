@@ -836,3 +836,9 @@ ul.tag-list li {
 	font-weight: 700;
 }
 /* END UTILITY CLASSES */
+
+/* CHARTS */
+.chart {
+	margin: 32px 0;
+}
+/* END CHARTS */
