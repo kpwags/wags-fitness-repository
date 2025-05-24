@@ -1,3 +1,5 @@
+import Chart from './lib/chart.js/auto'
+
 let overviewData = {
 	totals: {
 		runCount: 0,
@@ -6,13 +8,14 @@ let overviewData = {
 		averagePace: '',
 		averageDistance: 0,
 	},
-	years:[]
+	years: []
 };
 let recentRuns = [];
 
 window.addEventListener('load', function () {
 	loadOverview();
 	loadRecentRuns();
+	loadRecentRunTrends();
 });
 
 async function loadOverview() {
@@ -58,7 +61,7 @@ function loadYearlySummary() {
 		tr.querySelector('.pace-col').textContent = `${year.averagePace}/mi.`;
 		tr.querySelector('.avg-distance-col').textContent = year.averageDistance.toFixed(2)
 		tr.querySelector('.max-distance-col').textContent = year.maxDistance.toFixed(2)
-		;
+			;
 		tableFragment.appendChild(tr);
 	});
 
@@ -103,4 +106,38 @@ async function loadRecentRuns() {
 
 	document.querySelector('#runs-table-body tr.loading')?.classList.add('hidden');
 	document.getElementById('runs-table-body').appendChild(tableFragment);
+}
+
+async function loadRecentRunTrends() {
+	const [data, error] = await Api.Get('run/month/12');
+
+	if (error) {
+		showPageError(error);
+		return;
+	}
+
+	if (data.length === 0) {
+		return;
+	}
+
+	const chartData = data.map((d) => ({
+		label: d.month,
+		value: d.runs.reduce((a, { distance }) => a + distance, 0),
+	}));
+
+	new Chart(
+		document.getElementById('recent-run-trends'),
+		{
+			type: 'bar',
+			data: {
+				labels: chartData.map((c) => c.label),
+				datasets: [
+					{
+						label: 'Running Distance by Month',
+						data: chartData.map((c) => c.value),
+					}
+				]
+			}
+		}
+	);
 }

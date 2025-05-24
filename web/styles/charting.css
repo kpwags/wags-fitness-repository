@@ -1,0 +1,15 @@
+.vertical-chart {
+	position: relative;
+	height: 208px;
+	width: 100%;
+	margin: 32px 0;
+	border: 1px solid var(--grey-5);
+}
+
+.vertical-chart .bar {
+	width: 16px;
+	background-color: var(--green-4);
+	display: block;
+	position: absolute;
+	bottom: 0;
+}

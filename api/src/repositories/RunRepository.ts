@@ -221,6 +221,54 @@ class RunRepository {
 
 		return [null, runs];
 	}
+
+	static async GetRunsForLastMonths(limit = 6): Promise<[error: string | null, runs: { month: string; runs: Run[] }[]]> {
+		const [error, data] = await db.Query<RunQueryReturn>(getAllRuns);
+
+		if (error) {
+			return [error, []];
+		}
+
+		const months: { month: string; runs: Run[] }[] = [];
+
+		let currentMonth = 'START';
+		let currentRuns: Run[] = [];
+
+		data.forEach((row) => {
+			const month = dayjs(row.DateRan).format('MM-YYYY');
+
+			if (month !== currentMonth) {
+				if (currentMonth !== 'START') {
+					months.push({ month: currentMonth, runs: currentRuns });
+				}
+
+				currentRuns = [];
+				currentMonth = month;
+			}
+
+			currentRuns.push({
+				runId: row.RunId,
+				dateRan: row.DateRan,
+				temperature: row.Temperature,
+				hours: row.Hours,
+				minutes: row.Minutes,
+				seconds: row.Seconds,
+				runTime: displayRunTime({
+					hours: row.Hours,
+					minutes: row.Minutes,
+					seconds: row.Seconds,
+				}),
+				distance: row.Distance,
+				pace: calculatePace(row.Distance, row.Hours, row.Minutes, row.Seconds),
+				elevation: row.Elevation,
+				heartRate: row.HeartRate,
+				shoeId: row.ShoeId,
+				shoeName: row.ShoeName,
+			});
+		});
+
+		return [null, months.slice(0, limit)];
+	}
 }
 
 export default RunRepository;

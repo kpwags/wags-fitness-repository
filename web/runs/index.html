@@ -25,12 +25,15 @@
 
 		<script src="/scripts/main.js"></script>
 		<script src="/scripts/api.js"></script>
-		<script src="/scripts/runs-overview.js"></script>
 		<script src="/scripts/run-utilities.js"></script>
 
 		<script src="/scripts/lib/dayjs.min.js"></script>
 		<script src="/scripts/lib/dayjs.timezone.js"></script>
 		<script src="/scripts/lib/dayjs.utc.js"></script>
+		<script  type="module" src="/scripts/lib/chart.js"></script>
+
+
+		<script type="module" src="/scripts/runs-overview.js"></script>
 
 		<script>
 			dayjs.extend(window.dayjs_plugin_utc);
@@ -131,7 +134,10 @@
 							</table>
 						</div>
 					</div>
-					<div class="column">CHARTS</div>
+					<div class="column">
+						<h2>Recent Running Trends</h2>
+						<div class="vertical-chart" id="recent-run-trends"></div>
+					</div>
 				</div>
 			</main>
 			<wags-fitness-footer></wags-fitness-footer>
