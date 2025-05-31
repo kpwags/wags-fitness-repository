@@ -3,12 +3,16 @@ let overviewData = {
 		runCount: 0,
 		distance: 0,
 		time: '',
+		totalTime: { hours: 0, minutes: 0, seconds: 0 },
 		averagePace: '',
 		averageDistance: 0,
 	},
 	years: []
 };
 let recentRuns = [];
+
+let monthsChart;
+let yearsChart;
 
 window.addEventListener('load', function () {
 	loadOverview();
@@ -39,9 +43,21 @@ async function loadOverview() {
 function loadTotals() {
 	document.querySelector('.running-totals-table .runs-cell').textContent = numberWithCommas(overviewData.totals.runCount);
 	document.querySelector('.running-totals-table .distance-cell').textContent = numberWithCommas(overviewData.totals.distance);
-	document.querySelector('.running-totals-table .time-cell').textContent = overviewData.totals.time;
 	document.querySelector('.running-totals-table .pace-cell').textContent = `${overviewData.totals.averagePace}/mi.`;
 	document.querySelector('.running-totals-table .avg-distance-cell').textContent = overviewData.totals.averageDistance;
+
+	const results = breakOutTime(overviewData.totals.totalTime);
+
+	const template = document.querySelector('template#total-time-list');
+
+	const timeDiv = template.content.cloneNode(true);
+
+	timeDiv.querySelector('.days-line').textContent = results.days;
+	timeDiv.querySelector('.hours-line').textContent = results.hours;
+	timeDiv.querySelector('.minutes-line').textContent = results.minutes;
+	timeDiv.querySelector('.seconds-line').textContent = results.seconds;
+
+	document.querySelector('.running-totals-table .time-cell').appendChild(timeDiv);
 }
 
 function loadYearlySummary() {
@@ -125,7 +141,7 @@ async function loadRecentRunTrends() {
 		value: d.runs.reduce((a, { distance }) => a + distance, 0),
 	}));
 
-	new Chart(
+	monthsChart = new Chart(
 		document.getElementById('recent-run-trends'),
 		{
 			type: 'bar',
@@ -162,7 +178,7 @@ function buildYearlyChart() {
 			value: d.distance,
 		}));
 
-	new Chart(
+	yearsChart = new Chart(
 		document.getElementById('yearly-run-trends'),
 		{
 			type: 'bar',

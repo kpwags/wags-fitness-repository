@@ -1,3 +1,5 @@
+import RunTime from "./RunTime";
+
 export type RunOverview = {
 	totals: RunTotals;
 	years: YearlySummary[];
@@ -6,6 +8,7 @@ export type RunOverview = {
 export type RunTotals = {
 	runCount: number;
 	distance: number;
+	totalTime: RunTime;
 	time: string;
 	averagePace: string;
 	averageDistance: number;

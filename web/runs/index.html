@@ -18,22 +18,19 @@
 		<script src="/components/sidebar.js"></script>
 		<script src="/components/footer.js"></script>
 		<script src="/components/loading-spinner.js"></script>
-		<script src="/components/progress-bar.js"></script>
 		<script src="/components/confirm-dialog.js"></script>
 		<script src="/components/submit-form-button.js"></script>
 		<script src="/components/run-form.js"></script>
 
 		<script src="/scripts/main.js"></script>
 		<script src="/scripts/api.js"></script>
-		<script src="/scripts/run-utilities.js"></script>
+		<script src="/scripts/runs-shared.js"></script>
+		<script src="/scripts/runs-overview.js"></script>
 
 		<script src="/scripts/lib/dayjs.min.js"></script>
 		<script src="/scripts/lib/dayjs.timezone.js"></script>
 		<script src="/scripts/lib/dayjs.utc.js"></script>
 		<script src="/scripts/lib/chart.umd.js"></script>
-
-
-		<script src="/scripts/runs-overview.js"></script>
 
 		<script>
 			dayjs.extend(window.dayjs_plugin_utc);
@@ -47,12 +44,17 @@
 			<wags-fitness-header></wags-fitness-header>
 			<wags-fitness-sidebar activeLink="runs-overview"></wags-fitness-sidebar>
 			<main>
-				<h1>Running Overview</h1>
+				<div class="flex-header">
+					<h1>Running Overview</h1>
+					<button id="add-new-run" type="button" class="btn-primary">Add Run</button>
+				</div>
 
 				<div id="page-error" class="alert error hidden"></div>
 
 				<div class="running-overview">
 					<div class="column">
+						<h2>Running Totals</h2>
+
 						<table class="running-totals-table">
 							<thead>
 								<tr>
@@ -169,6 +171,15 @@
 				<td class="elevation-col center-align"></td>
 				<td class="hr-col center-align"></td>
 			</tr>
+		</template>
+
+		<template id="total-time-list">
+			<div class="total-time">
+				<div><span class="days-line"></span> Days</div>
+				<div><span class="hours-line"></span> Hour(s)</div>
+				<div><span class="minutes-line"></span> Minute(s)</div>
+				<div><span class="seconds-line"></span> Second(s)</div>
+			</div>
 		</template>
 	</body>
 </html>

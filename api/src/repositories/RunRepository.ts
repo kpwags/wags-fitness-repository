@@ -163,6 +163,7 @@ class RunRepository {
 		const totals: RunTotals = {
 			runCount: runs.length,
 			distance: parseFloat(totalDistance.toFixed(2)),
+			totalTime,
 			time: displayRunTime(totalTime),
 			averagePace: calculatePace(totalDistance, totalTime.hours, totalTime.minutes, totalTime.seconds),
 			averageDistance: parseFloat((totalDistance / runs.length).toFixed(2)),
