@@ -11,7 +11,7 @@ router.get('/overview', (_, res) => {
 				return res.status(400).json({ error });
 			}
 
-			res.json(data);
+			return res.json(data);
 		})
 		.catch((e) => {
 			return res.status(400).json({ error: e });
@@ -27,7 +27,7 @@ router.get('/shoe/:id', (req, res) => {
 				return res.status(400).json({ error });
 			}
 
-			res.json(data);
+			return res.json(data);
 		})
 		.catch((e) => {
 			return res.status(400).json({ error: e });
@@ -43,7 +43,7 @@ router.get('/recent/:limit', (req, res) => {
 				return res.status(400).json({ error });
 			}
 
-			res.json(data);
+			return res.json(data);
 		})
 		.catch((e) => {
 			return res.status(400).json({ error: e });
@@ -59,7 +59,7 @@ router.get('/month/:limit', (req, res) => {
 				return res.status(400).json({ error });
 			}
 
-			res.json(data);
+			return res.json(data);
 		})
 		.catch((e) => {
 			return res.status(400).json({ error: e });
@@ -73,7 +73,7 @@ router.get('/', (_, res) => {
 				return res.status(400).json({ error });
 			}
 
-			res.json(data);
+			return res.json(data);
 		})
 		.catch((e) => {
 			return res.status(400).json({ error: e });
@@ -102,7 +102,7 @@ router.post('/', (req, res) => {
 				return res.status(400).json({ error });
 			}
 
-			res.send();
+			return res.send();
 		})
 		.catch((e) => {
 			return res.status(400).json({ error: e });
@@ -132,7 +132,7 @@ router.put('/:id', (req, res) => {
 				return res.status(400).json({ error });
 			}
 
-			res.send();
+			return res.send();
 		})
 		.catch((e) => {
 			return res.status(400).json({ error: e });
@@ -148,7 +148,7 @@ router.delete('/:id', (req, res) => {
 				return res.status(400).json({ error });
 			}
 
-			res.send();
+			return res.send();
 		})
 		.catch((e) => {
 			return res.status(400).json({ error: e });

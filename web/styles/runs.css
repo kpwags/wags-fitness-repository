@@ -40,3 +40,9 @@ table {
 	flex-direction: column;
 	row-gap: 4px;
 }
+
+.yearly-running-sumary-table {
+	th.pace-col {
+		min-width: 120px;
+	}
+}

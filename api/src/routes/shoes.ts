@@ -11,7 +11,7 @@ router.get('/active', (_, res) => {
                 return res.status(400).json({ error });
             }
 
-            res.json(data);
+            return res.json(data);
         })
         .catch((e) => {
             return res.status(400).json({ error: e });
@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
                 return res.status(400).json({ error });
             }
 
-            res.json(data);
+            return res.json(data);
         })
         .catch((e) => {
             return res.status(400).json({ error: e });
@@ -41,7 +41,7 @@ router.get('/', async (_, res) => {
                 return res.status(400).json({ error });
             }
 
-            res.json(data);
+            return res.json(data);
         })
         .catch((e) => {
             return res.status(400).json({ error: e });
@@ -59,12 +59,12 @@ router.post('/', (req, res) => {
     };
 
     ShoeRepository.AddShoe(shoe)
-        .then(([error, shoeId]) => {   
+        .then(([error, shoeId]) => {
             if (error) {
                 return res.status(400).json({ error });
             }
 
-            res.json({ shoeId });
+            return res.json({ shoeId });
         })
         .catch((e) => {
             return res.status(400).json({ error: e });
@@ -88,7 +88,7 @@ router.put('/:id', (req, res) => {
                 return res.status(400).json({ error });
             }
 
-            res.send();
+            return res.send();
         })
         .catch((e) => {
             return res.status(400).json({ error: e });
@@ -104,7 +104,7 @@ router.delete('/:id', (req, res) => {
                 return res.status(400).json({ error });
             }
 
-            res.send();
+            return res.send();
         })
         .catch((e) => {
             return res.status(400).json({ error: e });

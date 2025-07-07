@@ -57,10 +57,13 @@ function loadTotals() {
 	timeDiv.querySelector('.minutes-line').textContent = results.minutes;
 	timeDiv.querySelector('.seconds-line').textContent = results.seconds;
 
+	document.querySelector('.running-totals-table .time-cell .total-time')?.remove();
 	document.querySelector('.running-totals-table .time-cell').appendChild(timeDiv);
 }
 
 function loadYearlySummary() {
+	clearTableRows('table.yearly-running-sumary-table tr.data-row');
+
 	const tableFragment = document.createDocumentFragment();
 
 	overviewData.years.forEach((year) => {
@@ -86,6 +89,7 @@ function loadYearlySummary() {
 }
 
 async function loadRecentRuns() {
+	clearTableRows('table.recent-runs-table tr.data-row');
 	const [data, error] = await Api.Get('run/recent/10');
 
 	if (error) {
