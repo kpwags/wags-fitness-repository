@@ -1,10 +1,10 @@
 import express from 'express';
-import ShoeRepository from '../repositories/ShoeRepository';
-import Shoe from '../models/Shoe';
+import { ShoeRepository } from '@repositories/ShoeRepository';
+import { Shoe } from '@models/Shoe';
 
-const router = express.Router();
+const shoeRouter = express.Router();
 
-router.get('/active', (_, res) => {
+shoeRouter.get('/active', (_, res) => {
     ShoeRepository.GetAllShoes(true)
         .then(([error, data]) => {
             if (error) {
@@ -18,7 +18,7 @@ router.get('/active', (_, res) => {
         });
 });
 
-router.get('/:id', async (req, res) => {
+shoeRouter.get('/:id', async (req, res) => {
     const id = parseInt(req.params.id);
 
     ShoeRepository.GetShoeById(id)
@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
         });
 });
 
-router.get('/', async (_, res) => {
+shoeRouter.get('/', async (_, res) => {
     ShoeRepository.GetAllShoes(false)
         .then(([error, data]) => {
             if (error) {
@@ -48,7 +48,7 @@ router.get('/', async (_, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+shoeRouter.post('/', (req, res) => {
     const formBody = req.body;
 
     const shoe: Shoe = {
@@ -71,7 +71,7 @@ router.post('/', (req, res) => {
         });
 });
 
-router.put('/:id', (req, res) => {
+shoeRouter.put('/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const formBody = req.body;
 
@@ -95,7 +95,7 @@ router.put('/:id', (req, res) => {
         });
 });
 
-router.delete('/:id', (req, res) => {
+shoeRouter.delete('/:id', (req, res) => {
     const id = parseInt(req.params.id);
 
     ShoeRepository.DeleteShoe(id)
@@ -111,4 +111,4 @@ router.delete('/:id', (req, res) => {
         });
 });
 
-export default router;
+export { shoeRouter };

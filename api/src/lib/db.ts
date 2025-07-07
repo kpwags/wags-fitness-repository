@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
-import config from '../config';
-import cleanSqliteError from '../lib/cleanSqliteError';
+import { config } from '../config';
+import { cleanSqliteError } from '@lib/cleanSqliteError';
 
 class db {
 	private static GetDatabase = () => new sqlite3.Database(config.db);

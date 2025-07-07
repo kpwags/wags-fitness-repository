@@ -1,6 +1,6 @@
-import Run from "../models/Run";
-import { YearlySummary } from "../models/RunOverview";
-import RunTime from "../models/RunTime";
+import { Run } from "@models/Run";
+import { YearlySummary } from "@models/RunOverview";
+import { RunTime } from "@models/RunTime";
 
 export const calculatePace = (distance: number, hours: number, minutes: number, seconds: number): string => {
 	const totalMinutes = hours * 60 + minutes + seconds / 60;

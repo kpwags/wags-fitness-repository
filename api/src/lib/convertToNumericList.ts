@@ -1,4 +1,4 @@
-const convertToNumericList = (arr: any[]): number[] => {
+export const convertToNumericList = (arr: any[]): number[] => {
     const convertedArray: number[] = [];
 
     for (let i = 0; i < arr.length; i += 1) {
@@ -11,5 +11,3 @@ const convertToNumericList = (arr: any[]): number[] => {
 
     return convertedArray;
 };
-
-export default convertToNumericList;

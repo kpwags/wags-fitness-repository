@@ -1,4 +1,4 @@
-import RunTime from "./RunTime";
+import { RunTime } from "./RunTime";
 
 export type RunOverview = {
 	totals: RunTotals;

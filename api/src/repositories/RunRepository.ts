@@ -1,8 +1,8 @@
-import { db } from '../lib/db';
+import { db } from '@lib/db';
 import dayjs from 'dayjs';
 
-import Run from '../models/Run';
-import { RunOverview, RunTotals, YearlySummary } from '../models/RunOverview';
+import { Run } from '@models/Run';
+import { RunOverview, RunTotals, YearlySummary } from '@models/RunOverview';
 
 import {
 	addRun,
@@ -10,14 +10,14 @@ import {
 	getAllRuns,
 	getRunsByShoe,
 	updateRun,
-} from '../queries/runs';
+} from '@queries/run';
 import {
 	addRunTimes,
 	buildYearlySummary,
 	calculatePace,
 	displayRunTime,
 	getTotalDistance,
-} from '../lib/runFunctions';
+} from '@lib/runFunctions';
 
 type RunQueryReturn = {
 	RunId: number;
@@ -272,4 +272,4 @@ class RunRepository {
 	}
 }
 
-export default RunRepository;
+export { RunRepository };

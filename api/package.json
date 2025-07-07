@@ -7,13 +7,15 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "build": "npx tsc",
+    "dev": "tsc-watch --onSuccess \"node dist/server.js\""
   },
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.13",
     "express": "^5.1.0",
+    "module-alias": "^2.2.3",
     "sqlite3": "^5.1.7",
     "typescript": "^5.8.3"
   },
@@ -21,9 +23,17 @@
     "@tsconfig/node20": "^20.1.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
+    "@types/module-alias": "^2.0.4",
     "@types/node": "^22.14.1",
     "@types/sqlite3": "^3.1.11",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^7.1.1"
+  },
+  "_moduleAliases": {
+    "@lib": "dist/lib",
+    "@models": "dist/models",
+    "@queries": "dist/queries",
+    "@repositories": "dist/repositories",
+    "@routes": "dist/routes"
   }
 }

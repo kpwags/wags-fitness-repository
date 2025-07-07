@@ -1,4 +1,4 @@
-export default (d: Date | null | undefined): string | null => {
+export const convertDateToJsonDate = (d: Date | null | undefined): string | null => {
     try {
         if (d) {
             if (typeof d === 'string') {
