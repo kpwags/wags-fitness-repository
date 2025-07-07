@@ -835,4 +835,21 @@ ul.tag-list li {
 .bolded {
 	font-weight: 700;
 }
+
+.flex-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 24px;
+}
+
+.flex-header h1 {
+	margin-bottom:0;
+}
 /* END UTILITY CLASSES */
+
+/* CHARTS */
+.chart {
+	margin: 32px 0;
+}
+/* END CHARTS */

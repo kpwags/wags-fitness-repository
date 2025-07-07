@@ -1,6 +1,28 @@
 const apiUrl = 'http://localhost:3020';
 // const apiUrl = 'http://192.168.1.232:3020';
 
+const theme = {
+	borderColor: 'oklch(75.7% 0 0)',
+	green1: 'oklch(0.38 0.0962 150.88)',
+	green2: 'oklch(0.45 0.1085 150.88)',
+	green3: 'oklch(0.5 0.1209 150.88)',
+	green4: 'oklch(0.57 0.1381 150.88)',
+	green5: 'oklch(0.67 0.1307 150.88)',
+	green6: 'oklch(0.86 0.1233 150.88)',
+	grey1: 'oklch(100% 0 0)',
+	grey2: 'oklch(92.16% 0 0)',
+	grey3: 'oklch(94.12% 0.005 302)',
+	grey4: 'oklch(75.7% 0 0)',
+	grey5: 'oklch(50.13% 0 0)',
+	black1: 'oklch(0% 0 256.24)',
+	black2: 'oklch(16.91% 0 256.24)',
+	black3: 'oklch(21.96% 0 256.24)',
+	black4: 'oklch(24% 0 173.65)',
+	danger1: 'oklch(56.68% 0.22 22.76)',
+	danger2: 'oklch(61.87% 0.22 22.76)',
+	danger3: 'oklch(87.05% 0.0715 3.71)',
+}
+
 window.addEventListener('load', () => {
 	const mainMenu = document.querySelector('header button.menu-button');
 
@@ -102,20 +124,8 @@ function sumValues(values) {
 	return values.reduce((a, b) => a + b, 0)
 }
 
-function titledSpan(title, value) {
-	const span = document.createElement('span');
-
-	const titleSpan = document.createElement('span');
-	titleSpan.classList.add('bolded');
-	titleSpan.textContent = `${title}: `;
-
-	const valueSpan = document.createElement('span');
-	valueSpan.textContent = value;
-
-	span.appendChild(titleSpan);
-	span.appendChild(valueSpan);
-
-	return span;
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function buildSelectList(data, valueKey, textKey) {

@@ -24,7 +24,7 @@ class Sidebar extends HTMLElement {
 						<details ${this.activeLink.startsWith('runs') ? 'open' : ''}>
 							<summary><span>Runs</span></summary>
 							<ul class="sub-list">
-								<li class="${this.activeLink === 'runs-overiew' ? 'active' : ''}"><a href="/runs/index.html">Overview</a></li>
+								<li class="${this.activeLink === 'runs-overview' ? 'active' : ''}"><a href="/runs/index.html">Overview</a></li>
 								<li class="${this.activeLink === 'runs-runs' ? 'active' : ''}"><a href="/runs/runs.html">Runs</a></li>
 								<li class="${this.activeLink === 'runs-shoes' ? 'active' : ''}"><a href="/runs/shoes.html">Shoes</a></li>
 							</ul>
