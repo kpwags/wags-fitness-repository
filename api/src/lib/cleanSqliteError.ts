@@ -1,1 +1,1 @@
-export default (error: Error): string => error.message.replace('SQLITE_ERROR: ', '');
+export const cleanSqliteError = (error: Error): string => error.message.replace('SQLITE_ERROR: ', '');

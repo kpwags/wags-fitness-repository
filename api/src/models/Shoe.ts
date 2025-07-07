@@ -10,4 +10,4 @@ type Shoe = {
     lifespan?: number;
 }
 
-export default Shoe;
+export { Shoe };

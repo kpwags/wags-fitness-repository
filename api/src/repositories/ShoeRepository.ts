@@ -1,9 +1,10 @@
-import { db } from '../lib/db';
-import convertToBoolean from '../lib/convertToBoolean';
-import RunRepository from './RunRepository';
-import { calculateLifespan } from '../lib/shoeFunctions';
+import { db } from '@lib/db';
+import { convertToBoolean } from '@lib/convertToBoolean';
+import { RunRepository } from '@repositories/RunRepository';
+import { calculateLifespan } from '@lib/shoeFunctions';
+import { convertDateToJsonDate } from '@lib/convertDateToJsonDate';
 
-import Shoe from '../models/Shoe';
+import { Shoe } from '@models/Shoe';
 
 import {
 	getAllShoes,
@@ -13,9 +14,8 @@ import {
 	getLastInsertedId,
 	deleteShoe,
 	addShoe,
-} from '../queries/shoes';
+} from '@queries/shoe';
 
-import convertDateToJsonDate from '../lib/convertDateToJsonDate';
 
 type ShoeQueryReturn = {
 	ShoeId: number;
@@ -50,7 +50,7 @@ class ShoeRepository {
 		const shoesWithRunData: Shoe[] = [];
 
 		for await (const shoe of shoes) {
-            const [error, data] = await RunRepository.GetRunsForShoe(shoe.shoeId);
+			const [error, data] = await RunRepository.GetRunsForShoe(shoe.shoeId);
 
 			if (error || data.length === 0) {
 				shoesWithRunData.push({
@@ -71,7 +71,7 @@ class ShoeRepository {
 					lifespan: calculateLifespan(data),
 				});
 			}
-        }
+		}
 
 		return [null, shoesWithRunData];
 	}
@@ -158,4 +158,4 @@ class ShoeRepository {
 	};
 }
 
-export default ShoeRepository;
+export { ShoeRepository };

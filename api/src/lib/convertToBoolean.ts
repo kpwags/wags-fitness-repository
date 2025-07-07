@@ -1,4 +1,4 @@
-export default (val: boolean | number | null | undefined): boolean => {
+export const convertToBoolean = (val: boolean | number | null | undefined): boolean => {
     if (val) {
         if (typeof val === 'boolean') {
             return val;

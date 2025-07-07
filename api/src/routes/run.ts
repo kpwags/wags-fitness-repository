@@ -1,10 +1,10 @@
 import express from 'express';
-import RunRepository from '../repositories/RunRepository';
-import Run from '../models/Run';
+import { RunRepository } from '@repositories/RunRepository';
+import { Run } from '@models/Run';
 
-const router = express.Router();
+const runRouter = express.Router();
 
-router.get('/overview', (_, res) => {
+runRouter.get('/overview', (_, res) => {
 	RunRepository.GetOverview()
 		.then(([error, data]) => {
 			if (error) {
@@ -18,7 +18,7 @@ router.get('/overview', (_, res) => {
 		});
 });
 
-router.get('/shoe/:id', (req, res) => {
+runRouter.get('/shoe/:id', (req, res) => {
 	const id = parseInt(req.params.id);
 
 	RunRepository.GetRunsForShoe(id)
@@ -34,7 +34,7 @@ router.get('/shoe/:id', (req, res) => {
 		});
 });
 
-router.get('/recent/:limit', (req, res) => {
+runRouter.get('/recent/:limit', (req, res) => {
 	const limit = parseInt(req.params.limit);
 
 	RunRepository.GetRecentRuns(limit)
@@ -50,7 +50,7 @@ router.get('/recent/:limit', (req, res) => {
 		});
 });
 
-router.get('/month/:limit', (req, res) => {
+runRouter.get('/month/:limit', (req, res) => {
 	const limit = parseInt(req.params.limit);
 
 	RunRepository.GetRunsForLastMonths(limit)
@@ -66,7 +66,7 @@ router.get('/month/:limit', (req, res) => {
 		});
 });
 
-router.get('/', (_, res) => {
+runRouter.get('/', (_, res) => {
 	RunRepository.GetAllRuns()
 		.then(([error, data]) => {
 			if (error) {
@@ -80,7 +80,7 @@ router.get('/', (_, res) => {
 		});
 });
 
-router.post('/', (req, res) => {
+runRouter.post('/', (req, res) => {
 	const formBody = req.body;
 
 	const run: Run = {
@@ -109,7 +109,7 @@ router.post('/', (req, res) => {
 		});
 });
 
-router.put('/:id', (req, res) => {
+runRouter.put('/:id', (req, res) => {
 	const id = parseInt(req.params.id);
 	const formBody = req.body;
 
@@ -139,7 +139,7 @@ router.put('/:id', (req, res) => {
 		});
 });
 
-router.delete('/:id', (req, res) => {
+runRouter.delete('/:id', (req, res) => {
 	const id = parseInt(req.params.id);
 
 	RunRepository.DeleteRun(id)
@@ -155,4 +155,4 @@ router.delete('/:id', (req, res) => {
 		});
 });
 
-export default router;
+export { runRouter };

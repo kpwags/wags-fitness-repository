@@ -14,4 +14,4 @@ type Run = {
     shoeName?: string | null;
 }
 
-export default Run;
+export { Run };

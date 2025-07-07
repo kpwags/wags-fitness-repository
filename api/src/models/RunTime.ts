@@ -4,4 +4,4 @@ type RunTime = {
 	seconds: number;
 }
 
-export default RunTime;
+export { RunTime };
