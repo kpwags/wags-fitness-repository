@@ -31,7 +31,16 @@ class Sidebar extends HTMLElement {
 						</details>
 					</li>
 					<li class="${this.activeLink === 'walks' ? 'active' : ''}"><a href="/walks/">Walks</a></li>
-					<li class="${this.activeLink === 'bike' ? 'active' : ''}"><a href="/bike-rides/">Bike Rides</a></li>
+					<li>
+						<details ${this.activeLink.startsWith('biking') ? 'open' : ''}>
+							<summary><span>Biking</span></summary>
+							<ul class="sub-list">
+								<li class="${this.activeLink === 'biking-overview' ? 'active' : ''}"><a href="/biking/index.html">Overview</a></li>
+								<li class="${this.activeLink === 'biking-rides' ? 'active' : ''}"><a href="/biking/bike-rides.html">Bike Rides</a></li>
+								<li class="${this.activeLink === 'biking-bikes' ? 'active' : ''}"><a href="/biking/bikes.html">Bikes</a></li>
+							</ul>
+						</details>
+					</li>
 					<li class="${this.activeLink === 'system' ? 'active' : ''}"><a href="/system/">System</a></li>
 				</ul>
 			</aside>

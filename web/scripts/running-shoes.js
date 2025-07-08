@@ -6,7 +6,7 @@ window.addEventListener('load', function () {
 	loadRunningShoes();
 
 	document.querySelector('#add-new-shoe')?.addEventListener('click', function () {
-		document.querySelector('#shoe-form-dialog h3').textContent = 'Add Run';
+		document.querySelector('#shoe-form-dialog h3').textContent = 'Add Shoe';
 		document.querySelector('dialog#shoe-form-dialog input#shoeId').value = '0';
 		document.querySelector('dialog#shoe-form-dialog input#purchase-date').value = dayjs().format('YYYY-MM-DD');
 		document.querySelector('dialog#shoe-form-dialog').showModal();
@@ -69,7 +69,8 @@ async function loadRunningShoes() {
 }
 
 function loadTable() {
-	clearTableRows();
+	clearTableRows('#active-running-shoes-table-body tr.data-row');
+	clearTableRows('#retired-running-shoes-table-body tr.data-row');
 
 	const activeShoesfragment = document.createDocumentFragment();
 	const retiredShoesfragment = document.createDocumentFragment();

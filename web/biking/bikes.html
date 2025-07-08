@@ -23,18 +23,9 @@
 
 		<script src="/scripts/main.js"></script>
 		<script src="/scripts/api.js"></script>
-		<script src="/scripts/running-shoes.js"></script>
+		<script src="/scripts/bikes.js"></script>
 
-		<script src="/scripts/lib/dayjs.min.js"></script>
-		<script src="/scripts/lib/dayjs.timezone.js"></script>
-		<script src="/scripts/lib/dayjs.utc.js"></script>
-
-		<script>
-			dayjs.extend(window.dayjs_plugin_utc);
-			dayjs.extend(window.dayjs_plugin_timezone);
-		</script>
-
-		<title>Running Shoes - Wags Fitness Repository</title>
+		<title>Bikes - Wags Fitness Repository</title>
 
 		<style type="text/css">
 			th.name-col {
@@ -46,20 +37,16 @@
 				min-width: 130px;
 			}
 
-			th.runs-col,
+			th.rides-col,
 			th.miles-col {
 				min-width: 80px;
-			}
-
-			th.lifespan-col {
-				min-width: 150px;
 			}
 
 			th.actions-col {
 				min-width: 175px;
 			}
 
-			.active-running-shoes {
+			.active-bikes {
 				margin-bottom: 64px;
 			}
 		</style>
@@ -67,18 +54,18 @@
 	<body>
 		<div class="page-content">
 			<wags-fitness-header></wags-fitness-header>
-			<wags-fitness-sidebar activeLink="runs-shoes"></wags-fitness-sidebar>
+			<wags-fitness-sidebar activeLink="biking-bikes"></wags-fitness-sidebar>
 			<main>
-				<div class="running-shoes">
-					<h1>Running Shoes</h1>
+				<div class="bikes">
+					<h1>Bikes</h1>
 
 					<div id="page-error" class="alert error hidden"></div>
 
-					<div class="active-running-shoes">
+					<div class="active-bikes">
 						<div class="table-actions two-column">
-							<div class="column"><h2>Active Shoes</h2></div>
+							<div class="column"><h2>Active Bikes</h2></div>
 							<div class="column">
-								<button type="button" class="btn-primary" id="add-new-shoe">Add New Running Shoe</button>
+								<button type="button" class="btn-primary" id="add-new-bike">Add New Bike</button>
 							</div>
 						</div>
 						<div class="table-wrapper">
@@ -86,19 +73,17 @@
 								<thead>
 									<tr>
 										<th scope="column" class="name-col">Name</th>
-										<th scope="column" class="date-col">Date Purchased</th>
-										<th scope="column" class="runs-col">Runs</th>
-										<th scope="column" class="miles-col">Miles Ran</th>
-										<th scope="column" class="lifespan-col">Lifespan</th>
+										<th scope="column" class="rides-col">Rides</th>
+										<th scope="column" class="miles-col">Miles Rode</th>
 										<th scope="column" class="actions-col">Actions</th>
 									</tr>
 								</thead>
-								<tbody id="active-running-shoes-table-body">
+								<tbody id="active-bikes-table-body">
 									<tr class="loading">
-										<td colspan="6"><loading-spinner></loading-spinner></td>
+										<td colspan="4"><loading-spinner></loading-spinner></td>
 									</tr>
 									<tr class="no-content hidden">
-										<td colspan="6">No Active Running Shoes</td>
+										<td colspan="4">No Active Bikes</td>
 									</tr>
 								</tbody>
 							</table>
@@ -106,26 +91,25 @@
 					</div>
 
 					<div class="table-actions two-column">
-						<div class="column"><h2>Retired Shoes</h2></div>
+						<div class="column"><h2>Retired Bikes</h2></div>
 					</div>
 					<div class="table-wrapper">
 						<table>
 							<thead>
 								<tr>
 									<th scope="column" class="name-col">Name</th>
-									<th scope="column" class="date-col">Date Purchased</th>
-									<th scope="column" class="runs-col">Runs</th>
-									<th scope="column" class="miles-col">Miles Ran</th>
-									<th scope="column" class="years-col">Year(s) Run</th>
+									<th scope="column" class="rides-col">Rides</th>
+									<th scope="column" class="miles-col">Miles Rode</th>
+									<th scope="column" class="years-col">Year(s) Rode</th>
 									<th scope="column" class="actions-col">Actions</th>
 								</tr>
 							</thead>
-							<tbody id="retired-running-shoes-table-body">
+							<tbody id="retired-bikes-table-body">
 								<tr class="loading">
-									<td colspan="6"><loading-spinner></loading-spinner></td>
+									<td colspan="5"><loading-spinner></loading-spinner></td>
 								</tr>
 								<tr class="no-content hidden">
-									<td colspan="6">No Retired Running Shoes</td>
+									<td colspan="6">No Retired Bikes</td>
 								</tr>
 							</tbody>
 						</table>
@@ -135,27 +119,20 @@
 			<wags-fitness-footer></wags-fitness-footer>
 		</div>
 
-		<dialog class="form-dialog" id="shoe-form-dialog">
-			<h3>Add Shoe</h3>
+		<dialog class="form-dialog" id="bike-form-dialog">
+			<h3>Add Bike</h3>
 
 			<div id="modal-error" class="alert error hidden"></div>
 
-			<form name="shoe-form">
+			<form name="bike-form">
 				<fieldset>
-					<legend hidden>Add Shoe</legend>
-					<input type="hidden" id="shoeId" name="shoeId" value="0" />
+					<legend hidden>Add Bike</legend>
+					<input type="hidden" id="bike-id" name="bike-id" value="0" />
 
 					<div class="form-field">
 						<label for="name">
 							<span class="required">*</span>Name
 							<input type="text" name="name" id="name" required />
-						</label>
-					</div>
-
-					<div class="form-field">
-						<label for="purchase-date">
-							<span class="required">*</span>Purchase Date
-							<input type="date" name="purchase-date" id="purchase-date" />
 						</label>
 					</div>
 
@@ -181,18 +158,14 @@
 			</form>
 		</dialog>
 
-		<input type="hidden" id="delete-shoe-id" value="0" />
+		<input type="hidden" id="delete-bike-id" value="0" />
 		<confirm-dialog></confirm-dialog>
 
-		<template id="active-shoe-row">
+		<template id="active-bike-row">
 			<tr class="data-row">
 				<td class="name-col"></td>
-				<td class="date-col center-align"></td>
-				<td class="runs-col center-align"></td>
-				<td class="miles-col center-align"></td>
-				<td class="lifespan-col">
-					<progress-bar progress="0"></progress-bar>
-				</td>
+				<td class="rides-col center-align">0</td>
+				<td class="miles-col center-align">0</td>
 				<td class="actions-col">
 					<button class="btn-link btn-edit">Edit</button>
 					<button class="btn-link btn-delete">Delete</button>
@@ -200,13 +173,12 @@
 			</tr>
 		</template>
 
-		<template id="retired-shoe-row">
+		<template id="retired-bike-row">
 			<tr class="data-row">
 				<td class="name-col"></td>
-				<td class="date-col center-align"></td>
-				<td class="runs-col center-align"></td>
-				<td class="miles-col center-align"></td>
-				<td class="years-col center-align"></td>
+				<td class="rides-col center-align">0</td>
+				<td class="miles-col center-align">0</td>
+				<td class="years-col center-align">N/A</td>
 				<td class="actions-col">
 					<button class="btn-link btn-edit">Edit</button>
 					<button class="btn-link btn-delete">Delete</button>
