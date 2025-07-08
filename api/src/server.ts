@@ -4,6 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { config } from './config';
 
+import { bikeRouter } from '@routes/bike';
 import { runRouter } from '@routes/run';
 import { shoeRouter } from '@routes/shoe';
 
@@ -21,6 +22,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use('/bike', bikeRouter);
 app.use('/run', runRouter);
 app.use('/shoe', shoeRouter);
 

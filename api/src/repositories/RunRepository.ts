@@ -67,7 +67,7 @@ class RunRepository {
 		});
 
 		return [null, runs];
-	};
+	}
 
 	static async GetRunsForShoe(shoeId: number): Promise<[error: string | null, runs: Run[]]> {
 		const [error, data] = await db.Query<RunQueryReturn>(getRunsByShoe, [shoeId]);
@@ -101,7 +101,7 @@ class RunRepository {
 		});
 
 		return [null, runs];
-	};
+	}
 
 	static async AddRun(run: Run): Promise<string | null> {
 		const error = await db.Execute(addRun, [
@@ -142,13 +142,13 @@ class RunRepository {
 		}
 
 		return null;
-	};
+	}
 
 	static async DeleteRun(runId: number): Promise<string | null> {
 		const error = await db.Execute(deleteRun, [runId]);
 
 		return error;
-	};
+	}
 
 	static async GetOverview(): Promise<[error: string | null, overview: RunOverview | null]> {
 		const [runsError, runs] = await this.GetAllRuns();

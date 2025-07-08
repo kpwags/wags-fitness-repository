@@ -1,4 +1,5 @@
 import { db } from '@lib/db';
+import { getLastInsertedRowId } from '@lib/getLastInsertedRowId';
 import { convertToBoolean } from '@lib/convertToBoolean';
 import { RunRepository } from '@repositories/RunRepository';
 import { calculateLifespan } from '@lib/shoeFunctions';
@@ -118,7 +119,7 @@ class ShoeRepository {
 			return [error, null];
 		}
 
-		const [lastInsertedIdError, lastInsertedId] = await this.GetLastInsertedRowId();
+		const [lastInsertedIdError, lastInsertedId] = await getLastInsertedRowId(getLastInsertedId);
 
 		if (lastInsertedIdError) {
 			return [lastInsertedIdError, null];
@@ -135,27 +136,13 @@ class ShoeRepository {
 		const error = await db.Execute(updateShoe, [shoe.name, shoe.datePurchased, shoe.isRetired, shoe.shoeId]);
 
 		return error;
-	};
-
-	static async GetLastInsertedRowId(): Promise<[error: string | null, id: number | null]> {
-		const [error, data] = await db.QuerySingle<number>(getLastInsertedId);
-
-		if (error) {
-			return [error, null];
-		}
-
-		if (!data) {
-			return [null, null];
-		}
-
-		return [null, data];
 	}
 
 	static async DeleteShoe(shoeId: number): Promise<string | null> {
 		const error = await db.Execute(deleteShoe, [shoeId]);
 
 		return error;
-	};
+	}
 }
 
 export { ShoeRepository };
