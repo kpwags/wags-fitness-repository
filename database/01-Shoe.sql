@@ -1,0 +1,7 @@
+CREATE TABLE "Shoe" (
+	"ShoeId"	INTEGER NOT NULL UNIQUE,
+	"Name"	TEXT NOT NULL UNIQUE,
+	"DatePurchased"	TEXT,
+	"IsRetired"	INTEGER,
+	PRIMARY KEY("ShoeId" AUTOINCREMENT)
+);

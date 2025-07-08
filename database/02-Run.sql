@@ -1,0 +1,14 @@
+CREATE TABLE "Run" (
+	"RunId"	INTEGER NOT NULL,
+	"DateRan"	TEXT NOT NULL,
+	"Temperature"	INTEGER,
+	"Hours"	INTEGER NOT NULL,
+	"Minutes"	INTEGER NOT NULL,
+	"Seconds"	INTEGER NOT NULL,
+	"Distance"	REAL NOT NULL,
+	"Elevation"	INTEGER,
+	"HeartRate"	INTEGER,
+	"ShoeId"	INTEGER,
+	PRIMARY KEY("RunId" AUTOINCREMENT),
+	FOREIGN KEY("ShoeId") REFERENCES "Shoe"("ShoeId")
+);
